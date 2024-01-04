@@ -1,0 +1,226 @@
+.log_in_container i {
+    position: absolute;
+    top: 1vh;
+    left: 1vh;
+    font-size: 5vh;
+    color: var(--primary);
+}
+
+.log_in_container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
+}
+
+.log_in_container .elements{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70vh;
+    border-radius: 40px 40px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(168, 169, 190, 0.85);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); 
+}
+
+.pill_logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 20vh;
+    position: relative;
+    margin-top: -70vh; 
+    background-color: rgba(168, 169, 190, 0.85);
+    border-radius: 50%;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.pill_logo img {
+    width: 10vh; 
+    height: auto; 
+}
+
+.logo {
+    display: none;
+}
+
+.log_in_container .text p{
+    margin-top: 10vh; 
+    font-size: 5vh;
+    color: var(--primary);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative; 
+    z-index: 9999; 
+    margin-top: 5vh; 
+}
+
+form input{
+    margin-bottom: 2vh;
+    width: 60vw;
+    height: 5vh;
+    font-size: 2vh;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -5vh; 
+}
+
+.log_in_container .form_container form p {
+    color: var(--primary);
+    font-size: 2vh;
+}
+
+.log_in_container .form_container .text {
+    color: var(--primary);
+    font-size: 2vh;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+.button {
+    width: 40vw;
+    font-size: 3vh;
+    margin-top: 5vh;
+    align-self: center; 
+}
+
+.form_container p.forgot_text {
+    text-align: right;
+    font-size: 1.5em;
+    color: var(--primary);
+    width: 100%;
+    margin-bottom: 2vh; 
+}
+
+.log_in_container .no_acc_text {
+    text-align: center;
+    font-size: 2vh;
+    color: var(--primary);
+    width: 100%;
+    margin-bottom: 0; 
+    position: relative;
+    z-index: 9999;
+}
+
+.highlight {
+    color: var(--secondary);
+}
+
+@media screen and (min-width: 1000px){
+    
+    .log_in_container{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pill_logo {
+        display: none;
+    }
+    
+    .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        height: 15vh;
+        position: absolute;
+        margin-top: -40vh; 
+        margin-bottom: 10vh;
+    }
+    
+    .logo img:first-child {
+        display: flex;
+        position: absolute;
+        z-index: 1;
+        width: 13vw; 
+        height: auto; 
+    }
+    
+    .logo img:last-child {
+        position: absolute;
+        z-index: 2;
+        width: 10vw; 
+        height: auto; 
+        margin-bottom: 3vh;
+    }
+    
+    .log_in_container .elements{
+        position: static;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        background: rgba(168, 169, 190, 0.85);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        width: 40vw;
+        min-height: 85vh;
+    }
+
+    form{
+        width: 30vw;
+        margin-top: 0;
+    }
+
+    form input{
+        margin-bottom: 2vh;
+        width: 30vw;
+        height: 5vh;
+        font-size: 2vh;
+    }
+
+    form .login .text{
+        margin-top: 0vh;
+        margin-bottom: 0vh;
+    }
+
+
+    .form_container {
+        height: 50vh;
+        margin-top: 0; 
+    }
+
+    .form_container .text:first-child {
+        margin-top: 55vh;
+    }
+
+    .button {
+        height: 6vh;
+        width: 10vw;
+        margin-top: 0vh;
+        margin-bottom: 15vh;
+    }
+    
+    .text{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .no_acc_text {
+        margin-top: 25vh;
+    }
+ 
+}
