@@ -6,16 +6,23 @@ class MedicationScheduleRepository extends Repository
 {
     public function addDosageSchedule(MedicationSchedule $medicationSchedule)
     {
-        $stmt = $this->database->connect()->prepare('
+        try
+        {
+            $stmt = $this->database->connect()->prepare('
             INSERT INTO medicationschedule (usermedicationid, dayofweek, timeofday, dosesperintake)
             VALUES (?, ?, ?, ?)
         ');
 
-        $stmt->execute([
-            $medicationSchedule->getId(),
-            $medicationSchedule->getDayOfWeek(),
-            $medicationSchedule->getTimeOfDay(),
-            $medicationSchedule->getDosesPerIntake()
-        ]);
+            $stmt->execute([
+                $medicationSchedule->getId(),
+                $medicationSchedule->getDayOfWeek(),
+                $medicationSchedule->getTimeOfDay(),
+                $medicationSchedule->getDosesPerIntake()
+            ]);
+        }
+        catch (PDOException $e)
+        {
+
+        }
     }
 }

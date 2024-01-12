@@ -7,11 +7,14 @@ require_once __DIR__.'/../models/Medication.php';
 require_once __DIR__.'/../repository/MedicationRepository.php';
 require_once __DIR__ .'/../models/UserMedication.php';
 require_once __DIR__.'/../repository/UsersMedicationsRepository.php';
+require_once __DIR__ .'/../models/MedicationCategory.php';
+require_once __DIR__.'/../repository/MedicationCategoryRepository.php';
 
 class MedicationController extends AppController {
     private $categoryRepository;
     private $medicationRepository;
     private $usersMedicationsRepository;
+    private $medicationCategoryRepository;
     private $message = [];
 
     public function __construct() {
@@ -19,6 +22,7 @@ class MedicationController extends AppController {
         $this->medicationRepository = new MedicationRepository();
         $this->categoryRepository = new CategoryRepository();
         $this->usersMedicationsRepository = new UsersMedicationsRepository();
+        $this->medicationCategoryRepository = new MedicationCategoryRepository();
     }
     public function addMed() {
         $categories = $this->categoryRepository->getCategories();
@@ -37,6 +41,21 @@ class MedicationController extends AppController {
                 'categories' => $categories,
                 'medications' => $medications
             ]);
+        }
+    }
+
+    public function showMedsToCategory()
+    {
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-type: application/json');
+            http_response_code(200);
+
+            echo json_encode($this->medicationCategoryRepository->getMedicationsByCategory($decoded['search']));
         }
     }
 }

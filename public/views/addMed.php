@@ -4,7 +4,8 @@
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
     <link rel="stylesheet" type="text/css" href="public/css/style_addMed.css">
     <script src="https://kit.fontawesome.com/c630670396.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="./public/js/CorrectInputs.js"></script>
+    <script type="text/javascript" src="./public/js/correctInputs.js"></script>
+    <script type="text/javascript" src="./public/js/dynamicMedications.js" defer></script>
     <title>ADD MED</title>
 </head>
 <body>
@@ -18,7 +19,7 @@
             <p>Category</p>
             <select name="category" id="category">
                 <?php foreach ($categories as $category): ?>
-                    <option value="<?php echo htmlspecialchars($category->getCategoryid()); ?>">
+                    <option value="<?php echo htmlspecialchars($category->getCategoryname()); ?>">
                         <?php echo htmlspecialchars($category->getCategoryname()); ?>
                     </option>
                 <?php endforeach; ?>
@@ -26,7 +27,7 @@
             <p>Name</p>
             <select name="medicationName" id="medication">
                 <?php foreach ($medications as $medication): ?>
-                    <option value="<?php echo htmlspecialchars($medication->getMedicationname()); ?>">
+                    <option value="<?php echo htmlspecialchars($medication->getMedicationname()); ?>" id="medication_option">
                         <?php echo htmlspecialchars($medication->getMedicationname()); ?>
                     </option>
                 <?php endforeach; ?>
@@ -48,4 +49,10 @@
     </div>
 </div>
 </body>
+
+<template id="med_template">
+    <option id="medication_option">
+        value
+    </option>
+</template>
 </html>

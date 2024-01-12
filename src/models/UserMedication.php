@@ -5,7 +5,6 @@ class UserMedication
     private $medicationName;
     private $form;
     private $dose;
-    private $isCustom;
     private $id;
 
     public function __construct(string $medicationName, string $form, int $dose)
@@ -45,16 +44,6 @@ class UserMedication
         $this->dose = $dose;
     }
 
-
-    public function isCustom(): bool
-    {
-        return $this->isCustom;
-    }
-
-    public function setIsCustom(bool $isCustom): void
-    {
-        $this->isCustom = $isCustom;
-    }
 
     public function setId($userMedicationId)
     {

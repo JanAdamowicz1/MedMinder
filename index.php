@@ -22,5 +22,7 @@ Routing::post('signUp', 'SecurityController');
 Routing::post('addCustomMed', 'UsersMedicationsController');
 Routing::post('addMed', 'MedicationController');
 Routing::post('dosageSchedule', 'UsersMedicationsController');
+Routing::post('showMedsToCategory', 'MedicationController');
+Routing::post('showUsersMedicationsToCurrentDay', 'UsersMedicationsController');
 
 Routing::run($path);

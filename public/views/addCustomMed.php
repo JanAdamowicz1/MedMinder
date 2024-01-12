@@ -4,8 +4,8 @@
         <link rel="stylesheet" type="text/css" href="public/css/style.css">
         <link rel="stylesheet" type="text/css" href="public/css/style_addCustomMed.css">
         <script src="https://kit.fontawesome.com/c630670396.js" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="./public/js/CorrectInputs.js"></script>
-        <title>ADD MED</title>
+        <script type="text/javascript" src="./public/js/correctInputs.js"></script>
+        <title>ADD CUSTOM MED</title>
     </head>
     <body>
         <div class="add_custom_med_container">

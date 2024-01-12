@@ -16,7 +16,8 @@ if (empty($_SESSION['user'])) {
         <link rel="stylesheet" type="text/css" href="public/css/style.css">
         <link rel="stylesheet" type="text/css" href="public/css/style_homePage.css">
         <script src="https://kit.fontawesome.com/c630670396.js" crossorigin="anonymous"></script>
-        <script src="public/js/menu.js"></script>
+        <script src="./public/js/menu.js"></script>
+        <script src="./public/js/changeDate.js"></script>
         <title>HOME PAGE</title>
     </head>
     <body>
@@ -46,7 +47,6 @@ if (empty($_SESSION['user'])) {
                         </div>  
                         <div class="user_text">
                             <p>Hello,</p>
-<!--                            <p>Username</p> -->
                             <?php if (isset($_SESSION['username'])): ?>
                             <p><?= htmlspecialchars($_SESSION['username']) ?>!</p>
                             <?php else: ?>
@@ -71,32 +71,43 @@ if (empty($_SESSION['user'])) {
                 <div class = "main_content">
                     <div class = "content_left">
                         <div class="buttons_container">
-                            <button class="button">Today</button>
+                            <button class="button" id="todayButton">Today</button>
                             <button class="button">Calendar</button>
                         </div>
                         <div class="date">
                             <div class="displayer">
-                                <p>Today</p> 
-                                <p>Monday, November 22nd</p> 
+                                <p id="todayText">Today</p>
+                                <p id="displayDate"><?= date("l, F jS") ?></p>
                             </div>
                         </div>
                         <h4>Your today's plan:</h4>
                         <div class="med_list">
-                            <?php foreach ($usersMedications as $userMedication): ?>
-                            <div class="displayer">
-                                <div class="left-text">
-                                    <p><?= $userMedication->getMedicationName(); ?></p>
-                                    <p>Nx<?= $userMedication->getDose(); ?>mg <?= $userMedication->getForm(); ?></p>
+                            <?php foreach ($usersMedications as $pair): ?>
+                                <?php
+                                $userMedication = $pair['userMedication'];
+                                $medicationSchedule = $pair['medicationSchedule'];
+                                ?>
+                                <div class="displayer">
+                                    <div class="left-text">
+                                        <p><?= $userMedication->getMedicationName(); ?></p>
+                                        <p>
+                                            <span id="dosesPerIntakeID"><?= $medicationSchedule->getDosesPerIntake(); ?></span>
+                                            x
+                                            <span id="doseID"><?= $userMedication->getDose(); ?></span>
+                                            mg
+                                            <span id="formID"><?= $userMedication->getForm(); ?></span>
+                                        </p>
+                                    </div>
+                                    <div class="right-text">
+                                        <p><i class="fa-solid fa-clock"></i> <?= $medicationSchedule->getTimeOfDay(); ?></p>
+                                    </div>
                                 </div>
-                                <div class="right-text">
-                                    <p><i class="fa-solid fa-clock"></i> 8:00 AM</p>
-                                </div>
-                            </div>
                             <?php endforeach; ?>
                         </div>
+
                         <div class="bottom_buttons_container">
-                            <button class="button"><i class="fa-solid fa-arrow-left"></i> Yesterday</button>
-                            <button class="button">Tomorrow <i class="fa-solid fa-arrow-right"></i></button>
+                            <button class="button" id="yesterday"><i class="fa-solid fa-arrow-left"></i> Yesterday</button>
+                            <button class="button" id="tomorrow">Tomorrow <i class="fa-solid fa-arrow-right"></i></button>
                         </div>
                     </div>
                     <div class="vertical-line"></div>
@@ -122,4 +133,25 @@ if (empty($_SESSION['user'])) {
             </div>
         </div>
     </body>
+<template id="usermedications_template">
+    <?php
+    $userMedication = $pair['userMedication'];
+    $medicationSchedule = $pair['medicationSchedule'];
+    ?>
+    <div class="displayer">
+        <div class="left-text">
+            <p id="medicationName">medicationName</p>
+            <p>
+                <span id="dosesPerIntake">dosesPerIntake</span>
+                x
+                <span id="dose">dose</span>
+                mg
+                <span id="form">form</span>
+            </p>
+        </div>
+        <div class="right-text">
+            <p><i class="fa-solid fa-clock"></i> timeOfDay</p>
+        </div>
+    </div>
+</template>
 </html>

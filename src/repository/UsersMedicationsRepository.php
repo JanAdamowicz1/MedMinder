@@ -84,23 +84,34 @@ class UsersMedicationsRepository extends Repository
             throw new Exception("Medication not found.");
         }
 
-        $stmt = $this->database->connect()->prepare('
+        $checkStmt = $this->database->connect()->prepare('
+        SELECT usermedicationid FROM usermedications WHERE userid = ? AND medicationid = ? AND medicationname = ? AND form = ? AND dose = ?
+    ');
+        $checkStmt->execute([$userid, $medicationid, $medicationName, $userMedication->getForm(), $userMedication->getDose()]);
+        $existingEntry = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($existingEntry) {
+            // Wpis już istnieje, zwracamy istniejące ID
+            $userMedication->setId($existingEntry['usermedicationid']);
+        } else {
+            // Wpis nie istnieje, dodajemy nowy
+            $insertStmt = $this->database->connect()->prepare('
             INSERT INTO usermedications (userid, medicationid, medicationname, form, dose)
             VALUES (?, ?, ?, ?, ?) RETURNING usermedicationid
         ');
 
-        $stmt->execute([
-            $userid,
-            $medicationid,
-            $medicationName,
-            $userMedication->getForm(),
-            $userMedication->getDose(),
-        ]);
+            $insertStmt->execute([
+                $userid,
+                $medicationid,
+                $medicationName,
+                $userMedication->getForm(),
+                $userMedication->getDose(),
+            ]);
 
-        $userMedicationId = $stmt->fetch(PDO::FETCH_ASSOC)['usermedicationid'];
-        $userMedication->setId($userMedicationId);
+            $userMedicationId = $insertStmt->fetch(PDO::FETCH_ASSOC)['usermedicationid'];
+            $userMedication->setId($userMedicationId);
+        }
     }
-
 
     public function getUsersMedications(): array
     {
@@ -118,23 +129,67 @@ class UsersMedicationsRepository extends Repository
 
         $result = [];
 
+        // Zmodyfikowane zapytanie SQL, aby dołączyć dane z tabeli medicationschedule
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM usermedications WHERE userid = :userid;
-        ');
+        SELECT um.*, ms.scheduleid, ms.dayofweek, ms.timeofday, ms.dosesperintake
+        FROM usermedications um
+        LEFT JOIN medicationschedule ms ON um.usermedicationid = ms.usermedicationid
+        WHERE um.userid = :userid;
+    ');
 
         $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
         $stmt->execute();
-        $usersMedications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $medicationsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($usersMedications as $usersMedication) {
-            $result[] = new UserMedication(
-                $usersMedication['medicationname'],
-                $usersMedication['form'],
-                $usersMedication['dose']
+        foreach ($medicationsData as $medication) {
+            $userMedication = new UserMedication(
+                $medication['medicationname'],
+                $medication['form'],
+                $medication['dose']
             );
+            $userMedication->setId($medication['usermedicationid']);
+
+            $medicationSchedule = new MedicationSchedule(
+                $medication['scheduleid'],
+                $medication['dosesperintake'],
+                $medication['dayofweek'],
+                $medication['timeofday']
+            );
+
+            // Dodanie pary obiektów UserMedication i MedicationSchedule do wyniku
+            $result[] = ['userMedication' => $userMedication, 'medicationSchedule' => $medicationSchedule];
         }
 
         return $result;
+    }
+
+    public function getMedicationByCurrentDay(string $currentDay)
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $userRepository = new UserRepository();
+        $email = $_SESSION['user'] ?? null;
+
+        $userid = $userRepository->getIdByEmail($email);
+        if ($userid === null) {
+            throw new Exception("User not found.");
+        }
+
+        $stmt = $this->database->connect()->prepare('
+        SELECT um.usermedicationid, um.userid, um.form, um.dose, um.medicationname, 
+               ms.dayofweek, ms.timeofday, ms.dosesperintake
+        FROM usermedications um
+        JOIN medicationschedule ms ON um.usermedicationid = ms.usermedicationid
+        WHERE ms.dayofweek = :dayofweek AND um.userid = :userid
+        ORDER BY ms.timeofday;
+    ');
+        $stmt->bindParam(':dayofweek', $currentDay, PDO::PARAM_STR);
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     private function getMedicationIdByName(string $medicationName)

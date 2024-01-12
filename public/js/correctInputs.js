@@ -13,14 +13,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const formValue = formInput ? formInput.value : null;
         const doseValue = doseInput ? doseInput.value : null;
 
-        // Check if the required fields are filled out
         if (!medicationName || !formValue || !doseValue) {
             event.preventDefault();
             alert('Please fill out all fields.');
             return;
         }
 
-        // Convert dose input to a number and check if it is an integer
         const dose = parseFloat(doseValue);
         if (isNaN(dose) || !Number.isInteger(dose)) {
             event.preventDefault();

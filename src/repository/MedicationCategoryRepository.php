@@ -3,24 +3,18 @@
 require_once 'Repository.php';
 require_once __DIR__ . '/../models/MedicationCategory.php';
 class MedicationCategoryRepository extends Repository {
-    public function getMedicationsByCategory($categoryId) {
+    public function getMedicationsByCategory(string $category)
+    {
         $stmt = $this->database->connect()->prepare('
-            SELECT m.medicationid, m.medicationname
+            SELECT m.medicationname
             FROM medications m
-            INNER JOIN medicationscategories mc ON m.medicationid = mc.medicationid
-            WHERE mc.categoryid = :categoryid
+            JOIN medicationcategories mc ON m.medicationid = mc.medicationid
+            JOIN categories c ON mc.categoryid = c.categoryid
+            WHERE c.categoryname = :category;
         ');
-        $stmt->bindParam(':categoryid', $categoryId, PDO::PARAM_INT);
+        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
         $stmt->execute();
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $medications = [];
-
-        foreach ($result as $row) {
-            $medication = new Medication($row['medicationid'], $row['medicationname']);
-            array_push($medications, $medication);
-        }
-
-        return $medications;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
