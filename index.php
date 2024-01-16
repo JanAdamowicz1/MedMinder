@@ -16,6 +16,9 @@ Routing::get('homePage', 'UsersMedicationsController');
 Routing::get('startPage', 'DefaultController');
 Routing::get('logout', 'DefaultController');
 Routing::get('dosageSchedule', 'DefaultController');
+Routing::get('account', 'UserController');
+Routing::get('yourMedications', 'UsersMedicationsController');
+
 
 Routing::post('login', 'SecurityController');
 Routing::post('signUp', 'SecurityController');
@@ -24,5 +27,10 @@ Routing::post('addMed', 'MedicationController');
 Routing::post('dosageSchedule', 'UsersMedicationsController');
 Routing::post('showMedsToCategory', 'MedicationController');
 Routing::post('showUsersMedicationsToCurrentDay', 'UsersMedicationsController');
+Routing::post('changePhoto', 'UserController');
+Routing::post('changeUsername', 'UserController');
+Routing::post('changeName', 'UserController');
+Routing::post('deleteMedication', 'UsersMedicationsController');
+
 
 Routing::run($path);

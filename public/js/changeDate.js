@@ -72,6 +72,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         // Pokaż/Ukryj tekst "Today"
         todayText.style.visibility = isToday() ? 'visible' : 'hidden';
+
+        // Ukryj przycisk "Yesterday", jeśli jest dzisiaj
+        yesterdayButton.style.visibility = isToday() ? 'hidden' : 'visible';
     }
 
     // Funkcja sprawdzająca, czy wyświetlana data to dzisiejsza data
@@ -96,6 +99,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Dodaj zdarzenie kliknięcia dla przycisku "Tomorrow"
     tomorrowButton.addEventListener('click', () => {
         currentDate.setDate(currentDate.getDate() + 1);
+        updateDisplayDate();
+        fetchMedicationsForSelectedDay();
+    });
+
+    document.addEventListener('dateSelected', (event) => {
+        currentDate = event.detail;
         updateDisplayDate();
         fetchMedicationsForSelectedDay();
     });

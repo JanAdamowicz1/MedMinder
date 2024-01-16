@@ -16,8 +16,9 @@ if (empty($_SESSION['user'])) {
         <link rel="stylesheet" type="text/css" href="public/css/style.css">
         <link rel="stylesheet" type="text/css" href="public/css/style_homePage.css">
         <script src="https://kit.fontawesome.com/c630670396.js" crossorigin="anonymous"></script>
-        <script src="./public/js/menu.js"></script>
+        <script src="./public/js/dynamicSidebar.js"></script>
         <script src="./public/js/changeDate.js"></script>
+        <script src="./public/js/calendar.js" defer></script>
         <title>HOME PAGE</title>
     </head>
     <body>
@@ -29,8 +30,9 @@ if (empty($_SESSION['user'])) {
                 </div>
                 <h1>Med<span class="highlight">Minder</span></h1>
                 <div class="buttons_container">
-                    <button class="button"><i class="fa-solid fa-user"></i> Account</button>
-                    <button class="button"><i class="fa-solid fa-calendar"></i> Calendar</button>
+                    <a href="account">
+                        <button class="button"><i class="fa-solid fa-user"></i> Account</button>
+                    </a>
                     <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
                     <button class="button"><i class="fa-solid fa-question"></i> Help</button>
                     <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
@@ -43,7 +45,11 @@ if (empty($_SESSION['user'])) {
                 <div class="header">
                     <div class="user_info">
                         <div class="user_photo">
-                            <img src="public/assets/user_photo.svg">
+                            <?php if (isset($_SESSION['image'])): ?>
+                                <img src="public/uploads/<?php echo $_SESSION['image']; ?>">
+                            <?php else: ?>
+                                <img src="public/assets/user_photo.svg">
+                            <?php endif; ?>
                         </div>  
                         <div class="user_text">
                             <p>Hello,</p>
@@ -60,19 +66,31 @@ if (empty($_SESSION['user'])) {
                 </div>
                 <div id="mySidepanel" class="sidepanel">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <button class="button"><i class="fa-solid fa-user"></i> Account</button>
-                    <button class="button"><i class="fa-solid fa-calendar"></i> Calendar</button>
+                    <a href="account">
+                        <button class="button"><i class="fa-solid fa-user"></i> Account</button>
+                    </a>
+                    <a href="yourMedications">
+                        <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
+                    </a>
                     <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
                     <button class="button"><i class="fa-solid fa-question"></i> Help</button>
                     <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
                     <button class="button"><a href="logout"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</a></button>
-
                 </div>
                 <div class = "main_content">
                     <div class = "content_left">
                         <div class="buttons_container">
                             <button class="button" id="todayButton">Today</button>
-                            <button class="button">Calendar</button>
+                            <button class="button" onclick="openCalendar()">Calendar</button>
+                        </div>
+                        <div id="sideCalendar" class="sidepanel">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeCalendar()">&times;</a>
+                            <div class="calendar-controls">
+                                <button class="button prev-month"><i class="fa-solid fa-arrow-left"></i></button>
+                                <span class="calendar-title">November 2023</span>
+                                <button class="button next-month"><i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                            <div class="calendar" id="calendar_mobile"></div>
                         </div>
                         <div class="date">
                             <div class="displayer">
@@ -82,43 +100,40 @@ if (empty($_SESSION['user'])) {
                         </div>
                         <h4>Your today's plan:</h4>
                         <div class="med_list">
-                            <?php foreach ($usersMedications as $pair): ?>
-                                <?php
-                                $userMedication = $pair['userMedication'];
-                                $medicationSchedule = $pair['medicationSchedule'];
-                                ?>
-                                <div class="displayer">
-                                    <div class="left-text">
-                                        <p><?= $userMedication->getMedicationName(); ?></p>
-                                        <p>
-                                            <span id="dosesPerIntakeID"><?= $medicationSchedule->getDosesPerIntake(); ?></span>
-                                            x
-                                            <span id="doseID"><?= $userMedication->getDose(); ?></span>
-                                            mg
-                                            <span id="formID"><?= $userMedication->getForm(); ?></span>
-                                        </p>
-                                    </div>
-                                    <div class="right-text">
-                                        <p><i class="fa-solid fa-clock"></i> <?= $medicationSchedule->getTimeOfDay(); ?></p>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
                         </div>
-
                         <div class="bottom_buttons_container">
-                            <button class="button" id="yesterday"><i class="fa-solid fa-arrow-left"></i> Yesterday</button>
-                            <button class="button" id="tomorrow">Tomorrow <i class="fa-solid fa-arrow-right"></i></button>
+                            <button class="button" id="yesterday"><i class="fa-solid fa-arrow-left"></i>Yesterday</button>
+                            <button class="button" id="tomorrow">Tomorrow<i class="fa-solid fa-arrow-right"></i></button>
                         </div>
                     </div>
                     <div class="vertical-line"></div>
                     <div class="content_right">
+                        <div class="buttons_container">
+                            <a href="yourMedications">
+                                <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
+                            </a>
+                            <button class="button"><i class="fa-solid fa-clock-rotate-left"></i>Medication history</button>
+                        </div>
+                        <div class="calendar-controls">
+                            <button class="button prev-month"><i class="fa-solid fa-arrow-left"></i></button>
+                            <span class="calendar-title">November 2023</span>
+                            <button class="button next-month"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                        <div class="calendar" id="calendar_desktop"></div>
+                        <div class="buttons_container">
+                            <a href="addMed">
+                                <button class="button"><i class="fa-solid fa-circle-plus"></i>Add medication</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="bottom_bar">
+                    <a href="account">
                     <div class="account">
                         <i class="fa-solid fa-user"></i>
                         <p>Account</p>
                     </div>
+                    </a>
                     <a href="addMed">
                     <div class="add_med">
                         <i class="fa-solid fa-plus"></i>
@@ -133,11 +148,13 @@ if (empty($_SESSION['user'])) {
             </div>
         </div>
     </body>
+
+
 <template id="usermedications_template">
-    <?php
-    $userMedication = $pair['userMedication'];
-    $medicationSchedule = $pair['medicationSchedule'];
-    ?>
+<!--    --><?php
+//    $userMedication = $pair['userMedication'];
+//    $medicationSchedule = $pair['medicationSchedule'];
+//    ?>
     <div class="displayer">
         <div class="left-text">
             <p id="medicationName">medicationName</p>
