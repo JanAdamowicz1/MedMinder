@@ -11,12 +11,16 @@ class User
     private $firstname;
     private $lastname;
     private $role = 'ROLE_USER';
+    private $image;
 
-    public function __construct(string $email, string $password)
+    public function __construct(string $email, string $password, string $username, string $firstname, string $lastname, string $image)
     {
         $this->email = $email;
         $this->password = $password;
-        $this->username = $this->extractUsernameFromEmail($email);
+        $this->username = $username;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->image = $image;
     }
 
     public function setEmail(string $email)
@@ -58,14 +62,31 @@ class User
     {
         return $this->role;
     }
+    public function setFirstname(string $firstname)
+    {
+        $this->firstname = $firstname;
+    }
     public function getFirstname()
     {
         return $this->firstname;
     }
-
+    public function setLastname(string $lastname)
+    {
+        $this->lastname = $lastname;
+    }
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 
 
