@@ -6,13 +6,20 @@ class MedicationSchedule
     private $dosesPerIntake;
     private $dayOfWeek;
     private $timeOfDay;
+    private $uploadDate;
 
-    public function __construct($id, $dosesPerIntake, $dayOfWeek, $timeOfDay)
+    public function __construct(int $id, int $dosesPerIntake, string $dayOfWeek, string $timeOfDay, string $uploadDate)
     {
         $this->id = $id;
         $this->dosesPerIntake = $dosesPerIntake;
         $this->dayOfWeek = $dayOfWeek;
         $this->timeOfDay = $timeOfDay;
+        $this->uploadDate = date($uploadDate);
+    }
+
+    public function getUploadDate()
+    {
+        return $this->uploadDate;
     }
 
     public function getId()

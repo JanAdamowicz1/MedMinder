@@ -6,7 +6,7 @@ class MedicationCategory
     private $medicationid;
     private $categoryid;
 
-    public function __construct($medicationcategoriesid, $medicationid, $categoryid)
+    public function __construct(int $medicationcategoriesid, int $medicationid, int $categoryid)
     {
         $this->medicationcategoriesid = $medicationcategoriesid;
         $this->medicationid = $medicationid;

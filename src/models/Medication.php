@@ -4,7 +4,7 @@ class Medication {
     private $medicationid;
     private $medicationname;
 
-    public function __construct($medicationid, $medicationname)
+    public function __construct(int $medicationid, string $medicationname)
     {
         $this->medicationid = $medicationid;
         $this->medicationname = $medicationname;

@@ -24,6 +24,7 @@ class MedicationController extends AppController {
         $this->usersMedicationsRepository = new UsersMedicationsRepository();
         $this->medicationCategoryRepository = new MedicationCategoryRepository();
     }
+
     public function addMed() {
         $categories = $this->categoryRepository->getCategories();
         $medications = $this->medicationRepository->getMedications();

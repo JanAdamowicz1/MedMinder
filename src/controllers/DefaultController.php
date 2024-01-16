@@ -19,10 +19,6 @@ class DefaultController extends AppController {
         $this->render('addMed');
     }
 
-//    public function homePage(){
-//        $this->render('homePage');
-//    }
-
     public function startPage(){
         $this->render('startPage');
     }

@@ -5,7 +5,7 @@ class Category
     private $categoryid;
     private $categoryname;
 
-    public function __construct($categoryid, $categoryname)
+    public function __construct(int $categoryid, string $categoryname)
     {
         $this->categoryid = $categoryid;
         $this->categoryname = $categoryname;
