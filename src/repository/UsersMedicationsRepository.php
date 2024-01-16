@@ -43,20 +43,32 @@ class UsersMedicationsRepository extends Repository
             throw new Exception("User not found.");
         }
 
-        $stmt = $this->database->connect()->prepare('
+        $checkStmt = $this->database->connect()->prepare('
+        SELECT usermedicationid FROM usermedications WHERE userid = ? AND medicationname = ? AND form = ? AND dose = ?
+    ');
+        $checkStmt->execute([$userid, $userMedication->getMedicationName(), $userMedication->getForm(), $userMedication->getDose()]);
+        $existingEntry = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($existingEntry) {
+            // Wpis już istnieje, zwracamy istniejące ID
+            $userMedication->setId($existingEntry['usermedicationid']);
+        } else {
+            $insertStmt = $this->database->connect()->prepare('
             INSERT INTO usermedications (userid, medicationname, form, dose)
             VALUES (?, ?, ?, ?) RETURNING usermedicationid
         ');
 
-        $stmt->execute([
-            $userid,
-            $userMedication->getMedicationName(),
-            $userMedication->getForm(),
-            $userMedication->getDose(),
-        ]);
 
-        $userMedicationId = $stmt->fetch(PDO::FETCH_ASSOC)['usermedicationid'];
-        $userMedication->setId($userMedicationId);
+            $insertStmt->execute([
+                $userid,
+                $userMedication->getMedicationName(),
+                $userMedication->getForm(),
+                $userMedication->getDose(),
+            ]);
+
+            $userMedicationId = $insertStmt->fetch(PDO::FETCH_ASSOC)['usermedicationid'];
+            $userMedication->setId($userMedicationId);
+        }
     }
 
     public function addMedication(UserMedication $userMedication): void
@@ -113,6 +125,33 @@ class UsersMedicationsRepository extends Repository
         }
     }
 
+    public function deleteMedication(int $scheduleid, int $usermedicationid): void
+    {
+        $stmt = $this->database->connect()->prepare('
+        DELETE FROM medicationschedule WHERE scheduleid = :scheduleid AND usermedicationid = :usermedicationid
+    ');
+        $stmt->bindParam(':scheduleid', $scheduleid, PDO::PARAM_INT);
+        $stmt->bindParam(':usermedicationid', $usermedicationid, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Then, check if there are no more entries associated with this medication
+        $checkStmt = $this->database->connect()->prepare('
+        SELECT COUNT(*) FROM medicationschedule WHERE usermedicationid = :usermedicationid
+    ');
+        $checkStmt->bindParam(':usermedicationid', $usermedicationid, PDO::PARAM_INT);
+        $checkStmt->execute();
+
+        $count = $checkStmt->fetchColumn();
+        if ($count == 0) {
+            // If no more schedules are linked, delete the medication
+            $deleteStmt = $this->database->connect()->prepare('
+            DELETE FROM usermedications WHERE usermedicationid = :usermedicationid
+        ');
+            $deleteStmt->bindParam(':usermedicationid', $usermedicationid, PDO::PARAM_INT);
+            $deleteStmt->execute();
+        }
+    }
+
     public function getUsersMedications(): array
     {
         if (session_status() == PHP_SESSION_NONE) {
@@ -129,16 +168,17 @@ class UsersMedicationsRepository extends Repository
 
         $result = [];
 
-        // Zmodyfikowane zapytanie SQL, aby dołączyć dane z tabeli medicationschedule
         $stmt = $this->database->connect()->prepare('
-        SELECT um.*, ms.scheduleid, ms.dayofweek, ms.timeofday, ms.dosesperintake
+        SELECT um.usermedicationid, um.userid, um.form, um.dose, um.medicationname, 
+               ms.dayofweek, ms.timeofday, ms.dosesperintake, ms.scheduleid, ms.uploaddate
         FROM usermedications um
-        LEFT JOIN medicationschedule ms ON um.usermedicationid = ms.usermedicationid
-        WHERE um.userid = :userid;
+        JOIN medicationschedule ms ON um.usermedicationid = ms.usermedicationid
+        WHERE um.userid = :userid
+        ORDER BY um.medicationname;
     ');
-
         $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
         $stmt->execute();
+
         $medicationsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($medicationsData as $medication) {
@@ -153,7 +193,8 @@ class UsersMedicationsRepository extends Repository
                 $medication['scheduleid'],
                 $medication['dosesperintake'],
                 $medication['dayofweek'],
-                $medication['timeofday']
+                $medication['timeofday'],
+                $medication['uploaddate']
             );
 
             // Dodanie pary obiektów UserMedication i MedicationSchedule do wyniku

@@ -9,21 +9,28 @@ class UserRepository extends Repository
     public function getUser(string $email): ?User
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE email = :email
-        ');
+        SELECT u.email, u.password, ud.firstname, ud.lastname, ud.username, ud.photo
+        FROM public.users u
+        LEFT JOIN public.userdetails ud ON u.userdetailsid = ud.userdetailsid
+        WHERE u.email = :email
+    ');
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user == false) {
+        if ($userData == false) {
             return null;
             //dorobic exception (filmik 8 minuta 28)
         }
 
         return new User(
-            $user['email'],
-            $user['password']
+            $userData['email'],
+            $userData['password'],
+            $userData['username'],
+            $userData['firstname'] ?? '',
+            $userData['lastname'] ?? '',
+            $userData['photo']
         );
     }
 
@@ -91,5 +98,54 @@ class UserRepository extends Repository
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? (int)$result['roleid'] : 0;
+    }
+
+    public function updateUserImage($user)
+    {
+        $userdetailsid = $this->getUserDetailsId($user);
+        $stmt = $this->database->connect()->prepare('
+        UPDATE userdetails
+        SET photo = ?
+        WHERE userdetailsid = ?
+    ');
+
+        $stmt->execute([
+            $user->getImage(),
+            $userdetailsid
+        ]);
+    }
+
+    public function updateUsername($user, $newUsername)
+    {
+        $userdetailsid = $this->getUserDetailsId($user);
+        $user->setUsername($newUsername);
+        $_SESSION['username'] = $user->getUsername();
+        $stmt = $this->database->connect()->prepare('
+        UPDATE userdetails
+        SET username = ?
+        WHERE userdetailsid = ?
+    ');
+
+        $stmt->execute([
+            $user->getUsername(),
+            $userdetailsid
+        ]);
+    }
+
+    public function updateName($user)
+    {
+        $userdetailsid = $this->getUserDetailsId($user);
+
+        $stmt = $this->database->connect()->prepare('
+        UPDATE userdetails
+        SET firstname = ?, lastname = ?
+        WHERE userdetailsid = ?
+    ');
+
+        $stmt->execute([
+            $user->getFirstname(),
+            $user->getLastname(),
+            $userdetailsid
+        ]);
     }
 }

@@ -5,21 +5,35 @@ require_once __DIR__ .'/../models/UserMedication.php';
 require_once __DIR__.'/../repository/UsersMedicationsRepository.php';
 require_once __DIR__ .'/../models/MedicationSchedule.php';
 require_once __DIR__.'/../repository/MedicationScheduleRepository.php';
+require_once __DIR__ .'/../models/User.php';
+require_once __DIR__.'/../repository/UserRepository.php';
+require_once __DIR__.'/../controllers/NotificationController.php';
 class UsersMedicationsController extends AppController
 {
     private $usersMedicationsRepository;
     private $medicationScheduleRepository;
+    private $notificationController;
     private $message = [];
-
     public function __construct()
     {
         parent::__construct();
         $this->usersMedicationsRepository = new UsersMedicationsRepository();
         $this->medicationScheduleRepository = new MedicationScheduleRepository();
+        $this->notificationController = new NotificationController();
+    }
+
+    public function yourMedications()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $this->render('yourMedications', ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications()]);
     }
 
     public function homePage()
     {
+        $this->notificationController->generateNotifications();
         $usersMedications = $this->usersMedicationsRepository->getUsersMedications();
         $this->render('homePage', ['usersMedications' => $usersMedications]);
     }
@@ -37,12 +51,23 @@ class UsersMedicationsController extends AppController
         return $this->render('addCustomMed', ['messages' => $this->message]);
     }
 
+    public function deleteMedication()
+    {
+        if ($this->isPost()) {
+            $scheduleid = $_POST['scheduleid'] ?? null;
+            $usermedicationid = $_POST['usermedicationid'] ?? null;
+            if ($scheduleid && $usermedicationid) {
+                $this->usersMedicationsRepository->deleteMedication($scheduleid, $usermedicationid);
+            }
+            return $this->render('yourMedications', ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications()]);
+        }
+    }
 
     public function dosageSchedule()
     {
         if ($this->isPost())
         {
-            $medicationSchedule = new MedicationSchedule($_POST['medicationId'], $_POST['dosesperintake'], $_POST['day'], $_POST['intake_time']);
+            $medicationSchedule = new MedicationSchedule($_POST['medicationId'], $_POST['dosesperintake'], $_POST['day'], $_POST['intake_time'], date('Y-m-d'));
             $this->medicationScheduleRepository->addDosageSchedule($medicationSchedule);
             return $this->render('homePage',
                 ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications(),
