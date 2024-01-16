@@ -35,7 +35,10 @@
 }
 
 .user_photo img{
-    height: 7vh;
+    height: 7vh;        /* Wysokość zdjęcia */
+    width: 7vh;         /* Szerokość zdjęcia */
+    border-radius: 50%;  /* Tworzy okrągłe zdjęcie */
+    object-fit: cover;   /* Zapewnia, że zdjęcie będzie odpowiednio wypełniać obszar bez rozciągania */
 }
 
 .user_text {
@@ -104,9 +107,9 @@
     margin-bottom: 1vh;
 }
 
-.sidepanel button:last-child {
+#mySidepanel button:last-child {
     margin-top: auto; 
-    margin-bottom: 2vh; 
+    margin-bottom: 2vh;
 }
 
 .home_page_container .content .buttons_container{
@@ -114,17 +117,21 @@
     justify-content: center;
 }
 
-.home_page_container .content .buttons_container .button{
+.home_page_container .content>.buttons_container .button{
     height: 7vw;
     width: 35vw;
     font-size: 6vw;
-    text-align: center; 
-    /* line-height: 7vh;  */
+    text-align: center;
     display: flex; 
     align-items: center; 
     justify-content: center;
 }
 
+.home_page_container .content_left>.buttons_container .button{
+    height: 7vw;
+    width: 35vw;
+    font-size: 6vw;
+}
 
 .home_page_container .displayer p:first-child{
     font-size: 6vw; 
@@ -178,6 +185,10 @@
     text-align: left; 
 }
 
+.content_right>.buttons_container {
+    display: none;
+}
+
 .bottom_bar{
     position: fixed;
     bottom: 0;
@@ -223,7 +234,119 @@
     font-size: 2vh;
 }
 
+.calendar {
+    width: 20vw;
+    margin: 3vh;
+    padding: 2vw;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendar table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    height: 3vh;
+    width: 3vh;
+    color: var(--primary);
+    font-size: 3vh;
+}
+
+.calendar tr:not(:first-child) td:not(.past) {
+    cursor: pointer;
+}
+
+.calendar tr:not(:first-child) td:not(.past):hover {
+    background-color: var(--secondary);
+}
+
+.calendar-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--primary);
+}
+
+.calendar-controls button {
+    margin: 0 1vw;
+    padding: 0;
+    height: 5vh;
+    width: 10vw;
+    font-size: 3vh;
+    align-self: center;
+}
+
+#calendar_mobile {
+    display: block;
+    width: 80vw;
+    height: 25vh;
+}
+
+#calendar_desktop {
+    display: none;
+}
+
+.sidepanel .calendar-title {
+    font-size: 3vh;
+}
+
+.past {
+    color: rgb(128, 128, 128);
+    background-color: #f0f0f0;
+}
+
+
 @media screen and (min-width: 1000px) {
+
+    #calendar_mobile {
+        display: none;
+    }
+
+    #calendar_desktop {
+        display: block;
+    }
+
+    .calendar {
+        width: 20vw;
+        margin: 3vh;
+        padding: 2vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calendar table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .calendar th, .calendar td {
+        height: 3vh;
+        width: 3vh;
+        color: var(--primary);
+        font-size: 2vh;
+    }
+
+
+    .calendar-controls button {
+        margin: 0 1vw;
+        padding: 0;
+        height: 5vh;
+        width: 3vw;
+        font-size: 3vh;
+    }
 
     .main_content{
         display: flex;
@@ -248,6 +371,34 @@
         height: 85vh; /* Wysokość linii */
         background-color: var(--primary); /* Kolor linii */
         margin-top: 2.5vh;
+    }
+
+    .content_right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 33vw;
+    }
+
+    .content_right>.buttons_container {
+        margin: 3vh;
+        position: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content_right>.buttons_container button{
+        height: 5vh;
+        width: auto;
+        font-size: 3vh;
+        margin: 2vh;
+    }
+
+    .content_right>.buttons_container:last-child button{
+        height: 9vh;
+        width: auto;
+        font-size: 4vh;
+        margin: 2vh;
     }
 
     .bottom_bar {
@@ -282,23 +433,20 @@
         height: 100%; /* Ustawienie kontenera na pełną wysokość */
     }
 
-    .navbar .buttons_container .button {
+    .home_page_container .navbar .buttons_container button {
         width: 15vw;
         height: 6vh;
         text-align: left;
-        margin-bottom: 2vh;
         z-index: 9999;
-        margin-left: 0;
-        margin-right: 0;
         font-size: 4vh;
-        margin-top: 0;
+        margin: 0 0 2vh;
         gap: 0.5vw;
         color: rgb(21, 10, 98);
     }
 
-    .home_page_container .navbar .buttons_container .button:last-child {
+    .home_page_container .navbar .buttons_container a:last-child {
         margin-top: auto; 
-        margin-bottom: 2vh; 
+        margin-bottom: 2vh;
     }
 
     .logo {
@@ -376,13 +524,14 @@
         justify-content: center;
         align-items: center;
         margin-bottom: 10vh;
+        gap: 0.5vw;
         z-index: 2; 
     }
     
     .home_page_container .bottom_buttons_container .button {
         height: 5vh;
         width: 20vw;
-        font-size: 5vh;
+        font-size: 3vh;
     }
 
     .header {

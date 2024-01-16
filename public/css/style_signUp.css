@@ -84,6 +84,7 @@ form input{
     width: 40vw;
     font-size: 3vh;
     align-self: center;
+    padding: 0 0;
 }
 
 .form_container {

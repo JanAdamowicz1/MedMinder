@@ -99,7 +99,8 @@ form input{
     width: 40vw;
     font-size: 3vh;
     margin-top: 5vh;
-    align-self: center; 
+    align-self: center;
+    padding: 0 0;
 }
 
 .form_container p.forgot_text {
