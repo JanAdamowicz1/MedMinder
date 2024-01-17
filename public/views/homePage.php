@@ -36,6 +36,9 @@ if (empty($_SESSION['user'])) {
                     <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
                     <button class="button"><i class="fa-solid fa-question"></i> Help</button>
                     <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                        <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
+                    <?php endif; ?>
                     <a href="logout">
                         <button class="button"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</button>
                     </a>
@@ -63,6 +66,9 @@ if (empty($_SESSION['user'])) {
                     <div class="menu_icon">
                         <button class="button" onclick="openNav()"><i class="fa-solid fa-bars"></i></button>
                     </div>
+                    <div class="notifications">
+                        <i class="fa-solid fa-bell" onclick="openDesktopNotifications()"></i>
+                    </div>
                 </div>
                 <div id="mySidepanel" class="sidepanel">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -75,6 +81,9 @@ if (empty($_SESSION['user'])) {
                     <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
                     <button class="button"><i class="fa-solid fa-question"></i> Help</button>
                     <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                        <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
+                    <?php endif; ?>
                     <button class="button"><a href="logout"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</a></button>
                 </div>
                 <div class = "main_content">
@@ -140,11 +149,26 @@ if (empty($_SESSION['user'])) {
                         <p>Add medication</p>
                     </div>
                     </a>
-                    <div class="notifications">
+                    <div class="notifications" onclick="openMobileNotifications()">
                         <i class="fa-solid fa-bell"></i>
                         <p>Notifications</p>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="notifications" class="sidepanel">
+            <form action="setAllAsRead" method="POST">
+                <button class="button" type="submit">Set all as read</button>
+            </form>
+            <div id="notifications_list">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNotifications()">&times;</a>
+                <?php foreach ($notifications as $notification): ?>
+                    <div class="displayer">
+                        <p id="message" class="<?php echo $notification->isStatus() ? 'state-true': 'state-false'; ?>">
+                            <?= $notification->getMessage() ?>
+                        </p>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </body>

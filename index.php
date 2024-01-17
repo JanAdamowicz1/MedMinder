@@ -31,6 +31,7 @@ Routing::post('changePhoto', 'UserController');
 Routing::post('changeUsername', 'UserController');
 Routing::post('changeName', 'UserController');
 Routing::post('deleteMedication', 'UsersMedicationsController');
+Routing::post('setAllAsRead', 'UsersMedicationsController');
 
 
 Routing::run($path);

@@ -69,6 +69,10 @@
     margin: 3vw;
 }
 
+.header .notifications{
+    display: none;
+}
+
 .menu_icon button i.fa-bars {
     font-size: 4vh; 
 }
@@ -111,6 +115,7 @@
     margin-top: auto; 
     margin-bottom: 2vh;
 }
+
 
 .home_page_container .content .buttons_container{
     display: flex;
@@ -161,6 +166,45 @@
     margin-left: 2vw;
 }
 
+#notifications {
+    width: 0;
+}
+
+#notifications_list {
+    margin-top: 5vh;
+    display: flex;
+    width: 80vw;
+    flex-direction: column;
+    margin-bottom: 1vh;
+    overflow-y: auto;
+    flex: 1;
+}
+
+#notifications button {
+    width: 50vw;
+    height: 5vh;
+}
+
+#notifications_list .displayer {
+    margin-top: 0;
+    margin-bottom: 2vh;
+}
+
+#notifications_list .displayer  p{
+    max-width: 70vw;
+    overflow: hidden;
+}
+
+.state-true {
+    color: rgb(128, 128, 128);
+}
+
+
+.state-false {
+    color: var(--primary);
+    font-weight: bold;
+}
+
 .med_list{
     display: flex;
     flex-direction: column;
@@ -183,6 +227,12 @@
 
 .med_list .displayer .left-text {
     text-align: left; 
+}
+
+.med_list .displayer #medicationName {
+    max-width: 70vw;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .content_right>.buttons_container {
@@ -308,6 +358,23 @@
 
 
 @media screen and (min-width: 1000px) {
+
+    #notifications button {
+        width: 20vw;
+        height: 5vh;
+    }
+
+    #notifications_list {
+        width: 30vw;
+    }
+
+    .header .notifications{
+        display: block;
+        margin-right: 4vw;
+        margin-left: auto;
+        font-size: 5vh;
+        color: var(--primary);
+    }
 
     #calendar_mobile {
         display: none;
@@ -438,7 +505,7 @@
         height: 6vh;
         text-align: left;
         z-index: 9999;
-        font-size: 4vh;
+        font-size: 3vh;
         margin: 0 0 2vh;
         gap: 0.5vw;
         color: rgb(21, 10, 98);
@@ -516,6 +583,10 @@
 
     .med_list .displayer{
         margin: 1vh;
+    }
+
+    .med_list .displayer #medicationName {
+        max-width: 40vw;
     }
 
     .home_page_container .bottom_buttons_container {

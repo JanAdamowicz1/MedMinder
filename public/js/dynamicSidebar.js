@@ -13,3 +13,15 @@ function openCalendar() {
 function closeCalendar() {
     document.getElementById("sideCalendar").style.width = "0";
 }
+
+function openMobileNotifications() {
+    document.getElementById("notifications").style.width = "90vw";
+}
+
+function openDesktopNotifications() {
+    document.getElementById("notifications").style.width = "30vw";
+}
+
+function closeNotifications(){
+    document.getElementById("notifications").style.width = "0";
+}

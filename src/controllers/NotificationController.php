@@ -6,6 +6,7 @@ require_once __DIR__.'/../repository/NotificationRepository.php';
 require_once __DIR__ .'/../models/UserMedication.php';
 require_once __DIR__.'/../repository/UsersMedicationsRepository.php';
 
+
 class NotificationController extends AppController
 {
     private $notificationRepository;
@@ -58,4 +59,11 @@ class NotificationController extends AppController
             $this->medicationScheduleRepository->updateUploadDate($medicationSchedule->getId(), $today->format('Y-m-d'));
         }
     }
+
+    public function setAllAsRead()
+    {
+        $this->notificationRepository->updateAllNotificationsStatus();
+    }
+
+
 }

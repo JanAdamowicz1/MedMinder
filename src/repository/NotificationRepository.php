@@ -56,5 +56,79 @@ class NotificationRepository extends Repository
         return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
     }
 
+    public function getUsersNotifications(): array
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        $userRepository = new UserRepository();
+        $email = $_SESSION['user'] ?? null;
+
+        if (!$email) {
+            throw new Exception("User is not logged in.");
+        }
+
+        $userid = $userRepository->getIdByEmail($email);
+        if ($userid === null) {
+            throw new Exception("User not found.");
+        }
+
+        try {
+            $stmt = $this->database->connect()->prepare('
+                SELECT * FROM notifications WHERE userid = ? ORDER BY date DESC, time DESC
+            ');
+            $stmt->execute([$userid]);
+
+            $notificationsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $notifications = [];
+
+            foreach ($notificationsData as $data) {
+                $notification = new Notification(
+                    $data['notificationid'],
+                    $data['message'],
+                    $data['time'],
+                    $data['date'],
+                    $data['status'],
+                    $data['scheduleid']
+                );
+                $notifications[] = $notification;
+            }
+
+            return $notifications;
+        } catch (PDOException $e) {
+
+            throw new Exception();
+        }
+    }
+
+    public function updateAllNotificationsStatus(): void
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $userRepository = new UserRepository();
+        $email = $_SESSION['user'] ?? null;
+
+        if (!$email) {
+            throw new Exception("User is not logged in.");
+        }
+
+        $userid = $userRepository->getIdByEmail($email);
+        if ($userid === null) {
+            throw new Exception("User not found.");
+        }
+
+        $stmt = $this->database->connect()->prepare('
+        UPDATE notifications
+        SET status = ?
+        WHERE userid = ?
+    ');
+
+        $stmt->execute([
+            'true',
+            $userid
+        ]);
+    }
 }
