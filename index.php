@@ -10,32 +10,32 @@ $path = parse_url($path, PHP_URL_PATH);
 Routing::get('', 'DefaultController'); //w momencie wywolania URL index otwieramy metode index z DefaultController
 Routing::get('index', 'DefaultController'); //w momencie wywolania URL index otwieramy metode index z DefaultController
 Routing::get('signUp', 'DefaultController');
-Routing::get('addCustomMed', 'UsersMedicationsController');
-Routing::get('addMed', 'UsersMedicationsController');
-Routing::get('homePage', 'UsersMedicationsController');
+Routing::get('homePage', 'DefaultController');
 Routing::get('startPage', 'DefaultController');
 Routing::get('logout', 'DefaultController');
-Routing::get('dosageSchedule', 'UsersMedicationsController');
-Routing::get('account', 'UserController');
+Routing::get('adminPanel', 'DefaultController');
+Routing::get('addCustomMed', 'UsersMedicationsController');
+Routing::get('addMed', 'UsersMedicationsController');
+Routing::get('dosageSchedule', 'MedicationScheduleController');
 Routing::get('yourMedications', 'UsersMedicationsController');
-Routing::get('adminPanel', 'UserController');
-Routing::get('settings', 'NotificationController');
+Routing::get('account', 'UserController');
+Routing::get('settings', 'SettingsController');
 
 
 Routing::post('login', 'SecurityController');
 Routing::post('signUp', 'SecurityController');
 Routing::post('addCustomMed', 'UsersMedicationsController');
 Routing::post('addMed', 'UsersMedicationsController');
-Routing::post('dosageSchedule', 'UsersMedicationsController');
-Routing::post('showMedsToCategory', 'MedicationController');
+Routing::post('deleteMedication', 'UsersMedicationsController');
 Routing::post('showUsersMedicationsToCurrentDay', 'UsersMedicationsController');
+Routing::post('dosageSchedule', 'MedicationScheduleController');
+Routing::post('showMedsToCategory', 'MedicationController');
+Routing::post('addMedToDatabase', 'MedicationController');
 Routing::post('changePhoto', 'UserController');
 Routing::post('changeUsername', 'UserController');
 Routing::post('changeName', 'UserController');
-Routing::post('deleteMedication', 'UsersMedicationsController');
-Routing::post('setAllAsRead', 'UsersMedicationsController');
-Routing::post('addMedToDatabase', 'MedicationController');
-Routing::post('changeNotificationSetting', 'NotificationController');
+Routing::post('setAllAsRead', 'NotificationController');
+Routing::post('changeNotificationSetting', 'SettingsController');
 
 
 Routing::run($path);

@@ -3,13 +3,6 @@
 require_once 'AppController.php';
 require_once __DIR__ .'/../models/UserMedication.php';
 require_once __DIR__.'/../repository/UsersMedicationsRepository.php';
-require_once __DIR__ .'/../models/MedicationSchedule.php';
-require_once __DIR__.'/../repository/MedicationScheduleRepository.php';
-require_once __DIR__ .'/../models/User.php';
-require_once __DIR__.'/../repository/UserRepository.php';
-require_once __DIR__.'/../controllers/NotificationController.php';
-require_once __DIR__ .'/../models/Notification.php';
-require_once __DIR__.'/../repository/NotificationRepository.php';
 require_once __DIR__ .'/../models/Medication.php';
 require_once __DIR__.'/../repository/MedicationRepository.php';
 require_once __DIR__ .'/../models/Category.php';
@@ -17,9 +10,6 @@ require_once __DIR__.'/../repository/CategoryRepository.php';
 class UsersMedicationsController extends AppController
 {
     private $usersMedicationsRepository;
-    private $medicationScheduleRepository;
-    private $notificationController;
-    private $notificationRepository;
     private $medicationRepository;
     private $categoryRepository;
     private $message = [];
@@ -27,9 +17,6 @@ class UsersMedicationsController extends AppController
     {
         parent::__construct();
         $this->usersMedicationsRepository = new UsersMedicationsRepository();
-        $this->medicationScheduleRepository = new MedicationScheduleRepository();
-        $this->notificationController = new NotificationController();
-        $this->notificationRepository = new NotificationRepository();
         $this->medicationRepository = new MedicationRepository();
         $this->categoryRepository = new CategoryRepository();
     }
@@ -38,15 +25,6 @@ class UsersMedicationsController extends AppController
     {
         $this->checkSession();
         $this->render('yourMedications', ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications()]);
-    }
-
-    public function homePage()
-    {
-        $this->checkSession();
-        $this->notificationController->generateNotifications();
-        $usersMedications = $this->usersMedicationsRepository->getUsersMedications();
-        $notifications = $this->notificationRepository->getUsersNotifications();
-        $this->render('homePage', ['usersMedications' => $usersMedications, 'notifications' => $notifications]);
     }
 
     public function addCustomMed()
@@ -97,17 +75,6 @@ class UsersMedicationsController extends AppController
         }
     }
 
-    public function dosageSchedule()
-    {
-        $this->checkSession();
-        if ($this->isPost())
-        {
-            $medicationSchedule = new MedicationSchedule($_POST['medicationId'], $_POST['dosesperintake'], $_POST['day'], $_POST['intake_time'], date('Y-m-d'));
-            $this->medicationScheduleRepository->addDosageSchedule($medicationSchedule);
-            $this->homePage();
-        }
-    }
-
     public function showUsersMedicationsToCurrentDay()
     {
         $this->checkSession();
@@ -121,14 +88,6 @@ class UsersMedicationsController extends AppController
             http_response_code(200);
 
             echo json_encode($this->usersMedicationsRepository->getMedicationByCurrentDay($decoded['dayOfWeek']));
-        }
-    }
-
-    public function setAllAsRead() {
-        $this->checkSession();
-        if ($this->isPost()) {
-            $this->notificationController->setAllAsRead();
-            $this->homePage();
         }
     }
 }

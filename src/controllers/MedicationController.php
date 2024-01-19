@@ -5,8 +5,6 @@ require_once __DIR__.'/../models/Category.php';
 require_once __DIR__.'/../repository/CategoryRepository.php';
 require_once __DIR__.'/../models/Medication.php';
 require_once __DIR__.'/../repository/MedicationRepository.php';
-require_once __DIR__ .'/../models/UserMedication.php';
-require_once __DIR__.'/../repository/UsersMedicationsRepository.php';
 require_once __DIR__ .'/../models/MedicationCategory.php';
 require_once __DIR__.'/../repository/MedicationCategoryRepository.php';
 

@@ -5,6 +5,8 @@ require_once __DIR__ .'/../models/Notification.php';
 require_once __DIR__.'/../repository/NotificationRepository.php';
 require_once __DIR__ .'/../models/UserMedication.php';
 require_once __DIR__.'/../repository/UsersMedicationsRepository.php';
+require_once __DIR__ .'/../models/MedicationSchedule.php';
+require_once __DIR__.'/../repository/MedicationScheduleRepository.php';
 
 
 class NotificationController extends AppController
@@ -60,29 +62,12 @@ class NotificationController extends AppController
             $this->medicationScheduleRepository->updateUploadDate($medicationSchedule->getId(), $today->format('Y-m-d'));
         }
     }
-
-    public function setAllAsRead()
-    {
+    public function setAllAsRead() {
         $this->checkSession();
-        $this->notificationRepository->updateAllNotificationsStatus();
-    }
-
-    public function settings()
-    {
-        $this->checkSession();
-        $enableNotifications = $this->notificationRepository->getUserNotificationSetting();
-        return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
-    }
-
-    public function changeNotificationSetting()
-    {
-        $this->checkSession();
-        $enableNotifications = $this->notificationRepository->getUserNotificationSetting();
         if ($this->isPost()) {
-            $enableNotifications = isset($_POST['notifications']) && $_POST['notifications'] === 'on';
-            $this->notificationRepository->updateNotifications($enableNotifications);
-            return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
+            $this->notificationRepository->updateAllNotificationsStatus();
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/homePage");
         }
-        return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
     }
 }

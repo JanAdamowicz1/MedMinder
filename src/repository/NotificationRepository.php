@@ -26,7 +26,6 @@ class NotificationRepository extends Repository
             VALUES (?, ?, ?, ?, ?, ?)
         ');
 
-
             $stmt->execute([
                 $userid,
                 $notification->getMessage(),
