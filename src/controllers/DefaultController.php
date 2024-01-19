@@ -11,28 +11,14 @@ class DefaultController extends AppController {
         $this->render('signUp');
     }
 
-    public function addCustomMed(){
-        $this->render('addCustomMed');
-    }
-
-    public function addMed(){
-        $this->render('addMed');
-    }
-
     public function startPage(){
+        $this->checkSession();
         $this->render('startPage');
     }
 
     public function logout(){
+        $this->checkSession();
         $this->render('logout');
-    }
-
-    public function dosageSchedule(){
-        $this->render('dosageSchedule');
-    }
-
-    public function settings(){
-        $this->render('settings');
     }
 }
 

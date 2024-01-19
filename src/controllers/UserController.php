@@ -11,7 +11,6 @@ class UserController extends AppController
 {
     private $userRepository;
     private $categoryRepository;
-    private $notificationRepository;
     private $message = [];
     const MAX_FILE_SIZE = 1024*1024;
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
@@ -22,25 +21,18 @@ class UserController extends AppController
         parent::__construct();
         $this->userRepository = new UserRepository();
         $this->categoryRepository = new CategoryRepository();
-        $this->notificationRepository = new NotificationRepository();
     }
 
     public function account()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
+        $this->checkSession();
         $user = $this->userRepository->getUser($_SESSION['user']);
         $this->render('account', ['user' => $user, 'messages' => $this->message]);
     }
 
     public function changePhoto()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
+        $this->checkSession();
         $user = $this->userRepository->getUser($_SESSION['user']);
 
         if ($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])) {
@@ -60,29 +52,31 @@ class UserController extends AppController
 
     public function changeUsername()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
+        $this->checkSession();
         $user = $this->userRepository->getUser($_SESSION['user']);
 
         if ($this->isPost())
         {
             $newUsername = $_POST['username'];
 
-            //TODO dorobic sprawdzenie czy username juz istnieje
+            if($newUsername == ''){
+                $this->message[] = 'Username cannot be empty';
+                return $this->render('account', ['user' => $user, 'messages' => $this->message]);
+            }
 
-            $this->userRepository->updateUsername($user, $newUsername);
-            return $this->render('account', ['user' => $user, 'messages' => $this->message]);
+            if(!$this->userRepository->usernameExists($newUsername)) {
+                $this->userRepository->updateUsername($user, $newUsername);
+                $this->message[] = 'Username changed successfully';
+                return $this->render('account', ['user' => $user, 'messages' => $this->message]);
+            }
         }
+        $this->message[] = 'User with this username already exists';
         return $this->render('account', ['user' => $user, 'messages' => $this->message]);
     }
 
     public function changeName()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->checkSession();
 
         $user = $this->userRepository->getUser($_SESSION['user']);
 
@@ -98,9 +92,7 @@ class UserController extends AppController
 
     public function adminPanel()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->checkSession();
         $categories = $this->categoryRepository->getCategories();
         return $this->render('adminPanel', ['categories' => $categories]);
     }

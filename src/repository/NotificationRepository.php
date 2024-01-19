@@ -7,10 +7,6 @@ class NotificationRepository extends Repository
 {
     public function addNotification(Notification $notification): void
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 
@@ -58,10 +54,6 @@ class NotificationRepository extends Repository
 
     public function getUsersNotifications(): array
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 
@@ -94,20 +86,14 @@ class NotificationRepository extends Repository
                 );
                 $notifications[] = $notification;
             }
-
             return $notifications;
         } catch (PDOException $e) {
-
             throw new Exception();
         }
     }
 
     public function updateAllNotificationsStatus(): void
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 
@@ -134,10 +120,6 @@ class NotificationRepository extends Repository
 
     public function getUserNotificationSetting()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 
@@ -169,10 +151,6 @@ class NotificationRepository extends Repository
 
     public function updateNotifications($enable)
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 

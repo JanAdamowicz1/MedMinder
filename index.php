@@ -11,11 +11,11 @@ Routing::get('', 'DefaultController'); //w momencie wywolania URL index otwieram
 Routing::get('index', 'DefaultController'); //w momencie wywolania URL index otwieramy metode index z DefaultController
 Routing::get('signUp', 'DefaultController');
 Routing::get('addCustomMed', 'UsersMedicationsController');
-Routing::get('addMed', 'DefaultController');
+Routing::get('addMed', 'UsersMedicationsController');
 Routing::get('homePage', 'UsersMedicationsController');
 Routing::get('startPage', 'DefaultController');
 Routing::get('logout', 'DefaultController');
-Routing::get('dosageSchedule', 'DefaultController');
+Routing::get('dosageSchedule', 'UsersMedicationsController');
 Routing::get('account', 'UserController');
 Routing::get('yourMedications', 'UsersMedicationsController');
 Routing::get('adminPanel', 'UserController');
@@ -25,7 +25,7 @@ Routing::get('settings', 'NotificationController');
 Routing::post('login', 'SecurityController');
 Routing::post('signUp', 'SecurityController');
 Routing::post('addCustomMed', 'UsersMedicationsController');
-Routing::post('addMed', 'MedicationController');
+Routing::post('addMed', 'UsersMedicationsController');
 Routing::post('dosageSchedule', 'UsersMedicationsController');
 Routing::post('showMedsToCategory', 'MedicationController');
 Routing::post('showUsersMedicationsToCurrentDay', 'UsersMedicationsController');

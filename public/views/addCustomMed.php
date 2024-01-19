@@ -15,7 +15,7 @@
                 </a>
                 <h1>Add custom medication</h1>
                 <form action="addCustomMed" method="POST">
-                    <p>Name*</p>
+                    <p>Name</p>
                     <input name="medicationName" type="text" placeholder=" Medication name">
                     <p>Form</p>
                     <input name="form" type="text" placeholder=" Form">
@@ -25,7 +25,6 @@
                         <button type="submit" class="button">Next</button>
                     </div>
                 </form>
-                <p>* required field</p>
             </div>
         </div>
     </body>

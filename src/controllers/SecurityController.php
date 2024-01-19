@@ -15,10 +15,6 @@ class SecurityController extends AppController
     }
     public function login()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if(!$this->isPost()){
             return $this->render('login');
         }
@@ -39,6 +35,7 @@ class SecurityController extends AppController
         $hashedPassword = $user->getPassword();
 
         if (password_verify($password, $hashedPassword)) {
+            session_start();
             $_SESSION['user'] = htmlspecialchars($_POST['email']);
             $_SESSION['username'] = $user->getUsername();
             $_SESSION['image'] = $user->getImage();
@@ -67,8 +64,10 @@ class SecurityController extends AppController
 
         $user = new User($email, password_hash($password, PASSWORD_BCRYPT), $email, '', '', '', $this->userRepository->getRoleId('user'));
 
-        $this->userRepository->addUser($user);
-
-        return $this->render('login', ['messages' => ['You\'ve been succesfully signed up!']]);
+        if(!$this->userRepository->userExists($user)) {
+            $this->userRepository->addUser($user);
+            return $this->render('login', ['messages' => ['You\'ve been succesfully signed up!']]);
+        }
+        return $this->render('signUp', ['messages' => ['User with this email already exists']]);
     }
 }

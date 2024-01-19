@@ -13,7 +13,6 @@ require_once __DIR__.'/../repository/MedicationCategoryRepository.php';
 class MedicationController extends AppController {
     private $categoryRepository;
     private $medicationRepository;
-    private $usersMedicationsRepository;
     private $medicationCategoryRepository;
     private $message = [];
 
@@ -21,28 +20,7 @@ class MedicationController extends AppController {
         parent::__construct();
         $this->medicationRepository = new MedicationRepository();
         $this->categoryRepository = new CategoryRepository();
-        $this->usersMedicationsRepository = new UsersMedicationsRepository();
         $this->medicationCategoryRepository = new MedicationCategoryRepository();
-    }
-
-    public function addMed() {
-        $categories = $this->categoryRepository->getCategories();
-        $medications = $this->medicationRepository->getMedications();
-
-        if ($this->isPost()) {
-            $userMedication = new UserMedication($_POST['medicationName'], $_POST['form'], $_POST['dose']);
-            $this->usersMedicationsRepository->addMedication($userMedication);
-
-            return $this->render('dosageSchedule', [
-                'userMedication' => $userMedication,
-                'messages' => $this->message
-            ]);
-        } else {
-            return $this->render('addMed', [
-                'categories' => $categories,
-                'medications' => $medications
-            ]);
-        }
     }
 
     public function showMedsToCategory()
@@ -65,7 +43,12 @@ class MedicationController extends AppController {
         $categories = $this->categoryRepository->getCategories();
         if ($this->isPost())
         {
-            $medication = new Medication(0, $_POST['medicationName']);
+            $medicationName = $_POST['medicationName'];
+            if($medicationName == ''){
+                $this->message[] = 'Medication name cannot be empty';
+                return $this->render('adminPanel', ['categories' => $categories, 'messages' => $this->message]);
+            }
+            $medication = new Medication(0, $medicationName);
             $medicationID = $this->medicationRepository->addMedToDatabase($medication);
             $categoryID = $_POST['category'];
             $this->medicationCategoryRepository->associateMedicationWithCategory($medicationID, $categoryID);

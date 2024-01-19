@@ -10,12 +10,18 @@ require_once __DIR__.'/../repository/UserRepository.php';
 require_once __DIR__.'/../controllers/NotificationController.php';
 require_once __DIR__ .'/../models/Notification.php';
 require_once __DIR__.'/../repository/NotificationRepository.php';
+require_once __DIR__ .'/../models/Medication.php';
+require_once __DIR__.'/../repository/MedicationRepository.php';
+require_once __DIR__ .'/../models/Category.php';
+require_once __DIR__.'/../repository/CategoryRepository.php';
 class UsersMedicationsController extends AppController
 {
     private $usersMedicationsRepository;
     private $medicationScheduleRepository;
     private $notificationController;
     private $notificationRepository;
+    private $medicationRepository;
+    private $categoryRepository;
     private $message = [];
     public function __construct()
     {
@@ -24,19 +30,19 @@ class UsersMedicationsController extends AppController
         $this->medicationScheduleRepository = new MedicationScheduleRepository();
         $this->notificationController = new NotificationController();
         $this->notificationRepository = new NotificationRepository();
+        $this->medicationRepository = new MedicationRepository();
+        $this->categoryRepository = new CategoryRepository();
     }
 
     public function yourMedications()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
+        $this->checkSession();
         $this->render('yourMedications', ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications()]);
     }
 
     public function homePage()
     {
+        $this->checkSession();
         $this->notificationController->generateNotifications();
         $usersMedications = $this->usersMedicationsRepository->getUsersMedications();
         $notifications = $this->notificationRepository->getUsersNotifications();
@@ -45,6 +51,7 @@ class UsersMedicationsController extends AppController
 
     public function addCustomMed()
     {
+        $this->checkSession();
         if ($this->isPost())
         {
             $userMedication = new UserMedication($_POST['medicationName'], $_POST['form'], $_POST['dose']);
@@ -56,8 +63,30 @@ class UsersMedicationsController extends AppController
         return $this->render('addCustomMed', ['messages' => $this->message]);
     }
 
+    public function addMed() {
+        $this->checkSession();
+        $categories = $this->categoryRepository->getCategories();
+        $medications = $this->medicationRepository->getMedications();
+
+        if ($this->isPost()) {
+            $userMedication = new UserMedication($_POST['medicationName'], $_POST['form'], $_POST['dose']);
+            $this->usersMedicationsRepository->addMedication($userMedication);
+
+            return $this->render('dosageSchedule', [
+                'userMedication' => $userMedication,
+                'messages' => $this->message
+            ]);
+        } else {
+            return $this->render('addMed', [
+                'categories' => $categories,
+                'medications' => $medications
+            ]);
+        }
+    }
+
     public function deleteMedication()
     {
+        $this->checkSession();
         if ($this->isPost()) {
             $scheduleid = $_POST['scheduleid'] ?? null;
             $usermedicationid = $_POST['usermedicationid'] ?? null;
@@ -70,21 +99,18 @@ class UsersMedicationsController extends AppController
 
     public function dosageSchedule()
     {
+        $this->checkSession();
         if ($this->isPost())
         {
             $medicationSchedule = new MedicationSchedule($_POST['medicationId'], $_POST['dosesperintake'], $_POST['day'], $_POST['intake_time'], date('Y-m-d'));
             $this->medicationScheduleRepository->addDosageSchedule($medicationSchedule);
-//            return $this->render('homePage',
-//                ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications(),
-//                    'messages' => $this->message]);
             $this->homePage();
         }
-        //return $this->render('homePage', ['messages' => $this->message]);
-        //$this->homePage();
     }
 
     public function showUsersMedicationsToCurrentDay()
     {
+        $this->checkSession();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {
@@ -99,10 +125,10 @@ class UsersMedicationsController extends AppController
     }
 
     public function setAllAsRead() {
+        $this->checkSession();
         if ($this->isPost()) {
             $this->notificationController->setAllAsRead();
             $this->homePage();
         }
     }
-
 }

@@ -82,6 +82,7 @@
 
 .account_container .text {
     color: var(--primary);
+    font-size: 2vh;
 }
 
 @media screen and (min-width: 1000px) {

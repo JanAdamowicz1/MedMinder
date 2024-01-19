@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
     <link rel="stylesheet" type="text/css" href="public/css/style_dosageSchedule.css">
     <script src="https://kit.fontawesome.com/c630670396.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./public/js/correctSchedule.js"></script>
     <title>DOSAGE SCHEDULE</title>
 </head>
 <body>

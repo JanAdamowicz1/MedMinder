@@ -22,6 +22,7 @@ class NotificationController extends AppController
 
     public function generateNotifications()
     {
+        $this->checkSession();
         date_default_timezone_set('Europe/Warsaw');
         $usersMedicationsWithSchedule = $this->usersMedicationsRepository->getUsersMedications();
 
@@ -62,17 +63,20 @@ class NotificationController extends AppController
 
     public function setAllAsRead()
     {
+        $this->checkSession();
         $this->notificationRepository->updateAllNotificationsStatus();
     }
 
     public function settings()
     {
+        $this->checkSession();
         $enableNotifications = $this->notificationRepository->getUserNotificationSetting();
         return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
     }
 
     public function changeNotificationSetting()
     {
+        $this->checkSession();
         $enableNotifications = $this->notificationRepository->getUserNotificationSetting();
         if ($this->isPost()) {
             $enableNotifications = isset($_POST['notifications']) && $_POST['notifications'] === 'on';

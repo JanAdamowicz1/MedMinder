@@ -17,15 +17,6 @@
             <img src="public/uploads/<?= $user->getImage() ?>">
         </div>
         <form action="changePhoto" ENCTYPE="multipart/form-data" method="POST">
-            <div class="text">
-                <?php
-                if(isset($messages)){
-                    foreach($messages as $message) {
-                        echo $message;
-                    }
-                }
-                ?>
-            </div>
             <input type="file" name="file">
             <button class="button" type="submit">Change photo</button>
         </form>
@@ -34,7 +25,7 @@
         <h1>Username</h1>
         <h2><?= $user->getUsername() ?></h2>
         <h1>Name</h1>
-        <?php if (!empty($user->getFirstname()) && !empty($user->getLastname())): ?>
+        <?php if (!empty($user->getFirstname()) || !empty($user->getLastname())): ?>
             <h2><?= htmlspecialchars($user->getFirstname()) . " " . htmlspecialchars($user->getLastname()) ?></h2>
         <?php else: ?>
             <h2>Not provided</h2>
@@ -53,6 +44,15 @@
                     <button class="button" type="submit">Change name</button>
                 </form>
             </div>
+        </div>
+        <div class="text">
+            <?php
+            if(isset($messages)){
+                foreach($messages as $message) {
+                    echo $message;
+                }
+            }
+            ?>
         </div>
     </div>
 </div>

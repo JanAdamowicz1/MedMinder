@@ -1,15 +1,3 @@
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Sprawdź, czy sesja jest aktywna
-if (empty($_SESSION['user'])) {
-    header('Location: ../startPage');
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html>
     <head>

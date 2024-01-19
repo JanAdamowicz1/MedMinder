@@ -5,7 +5,6 @@ require_once __DIR__.'/../models/User.php';
 
 class UserRepository extends Repository
 {
-
     public function getUser(string $email): ?User
     {
         $stmt = $this->database->connect()->prepare('
@@ -47,7 +46,6 @@ class UserRepository extends Repository
         if ($result === false) {
             return null;
         }
-
         return (int) $result['userid'];
     }
 
@@ -91,7 +89,6 @@ class UserRepository extends Repository
 
     public function getRoleId($roleName): int
     {
-        // Prepare the SQL statement with a placeholder for the role name
         $stmt = $this->database->connect()->prepare('
         SELECT roleid FROM public.roles WHERE rolename = :rolename
     ');
@@ -149,5 +146,34 @@ class UserRepository extends Repository
             $user->getLastname(),
             $userdetailsid
         ]);
+    }
+
+    public function userExists(User $user): bool
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.users WHERE email = :email
+        ');
+        $email = $user->getEmail();
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+        return true;
+        }
+        return false;
+    }
+
+    public function usernameExists(string $username): bool
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.userdetails WHERE username = :username
+        ');
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return true;
+        }
+        return false;
     }
 }

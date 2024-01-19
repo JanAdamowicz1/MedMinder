@@ -27,6 +27,15 @@
             </div>
             <button type="submit" class="button">Add</button>
         </form>
+        <div class="text">
+            <?php
+            if (isset($messages)){
+                foreach ($messages as $message){
+                    echo $message;
+                }
+            }
+            ?>
+        </div>
     </div>
 </div>
 </body>

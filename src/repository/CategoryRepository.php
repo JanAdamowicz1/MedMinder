@@ -16,7 +16,6 @@ class CategoryRepository extends Repository {
             $category = new Category($row['categoryid'], $row['categoryname']);
             array_push($categories, $category);
         }
-
         return $categories;
     }
 }

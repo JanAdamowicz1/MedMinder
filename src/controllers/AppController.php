@@ -20,7 +20,6 @@ class AppController {
     }
 
     protected function render(string $template = null, array $variables = []){
-        //variables to zmienne przekazywane na widoki, wiecej o tym w filmiku 06, 10:33
         $templatePath = 'public/views/'.$template.'.php'; //za pomocą kropki łączymy stringi
         $output = 'File not found';
 
@@ -33,5 +32,11 @@ class AppController {
         }
 
         print $output;
+    }
+
+    protected function checkSession(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 }
