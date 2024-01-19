@@ -70,6 +70,12 @@ h1{
     margin-right: 5px; /* Adjust as needed for spacing */
 }
 
+#user_medication_info {
+    max-width: 50vw;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 @media screen and (min-width: 1000px) {
 
     h1{
@@ -85,5 +91,9 @@ h1{
         width: 10vw;
         padding-top: 3vh;
         padding-bottom: 3vh;
+    }
+
+    #user_medication_info {
+        max-width: 50vw;
     }
 }

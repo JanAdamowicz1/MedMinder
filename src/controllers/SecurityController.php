@@ -42,6 +42,7 @@ class SecurityController extends AppController
             $_SESSION['user'] = htmlspecialchars($_POST['email']);
             $_SESSION['username'] = $user->getUsername();
             $_SESSION['image'] = $user->getImage();
+            $_SESSION['role'] = $user->getRole();
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/homePage");
         }
@@ -64,7 +65,7 @@ class SecurityController extends AppController
             return $this->render('signUp', ['messages' => ['Confirmed password and password must be the same']]);
         }
 
-        $user = new User($email, password_hash($password, PASSWORD_BCRYPT), $email, '', '', '');
+        $user = new User($email, password_hash($password, PASSWORD_BCRYPT), $email, '', '', '', $this->userRepository->getRoleId('user'));
 
         $this->userRepository->addUser($user);
 

@@ -3,9 +3,15 @@
 require_once 'AppController.php';
 require_once __DIR__ .'/../models/User.php';
 require_once __DIR__.'/../repository/UserRepository.php';
+require_once __DIR__.'/../models/Category.php';
+require_once __DIR__.'/../repository/CategoryRepository.php';
+require_once __DIR__.'/../models/Notification.php';
+require_once __DIR__.'/../repository/NotificationRepository.php';
 class UserController extends AppController
 {
     private $userRepository;
+    private $categoryRepository;
+    private $notificationRepository;
     private $message = [];
     const MAX_FILE_SIZE = 1024*1024;
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
@@ -15,6 +21,8 @@ class UserController extends AppController
     {
         parent::__construct();
         $this->userRepository = new UserRepository();
+        $this->categoryRepository = new CategoryRepository();
+        $this->notificationRepository = new NotificationRepository();
     }
 
     public function account()
@@ -86,6 +94,15 @@ class UserController extends AppController
             return $this->render('account', ['user' => $user, 'messages' => $this->message]);
         }
         return $this->render('account', ['user' => $user, 'messages' => $this->message]);
+    }
+
+    public function adminPanel()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $categories = $this->categoryRepository->getCategories();
+        return $this->render('adminPanel', ['categories' => $categories]);
     }
 
     private function validate(array $file): bool

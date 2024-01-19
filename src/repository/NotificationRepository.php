@@ -131,4 +131,73 @@ class NotificationRepository extends Repository
             $userid
         ]);
     }
+
+    public function getUserNotificationSetting()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $userRepository = new UserRepository();
+        $email = $_SESSION['user'] ?? null;
+
+        if (!$email) {
+            throw new Exception("User is not logged in.");
+        }
+
+        $userid = $userRepository->getIdByEmail($email);
+        if ($userid === null) {
+            throw new Exception("User not found.");
+        }
+
+        $user = $userRepository->getUser($email);
+        $userdetailsid = $userRepository->getUserDetailsId($user);
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT notifications FROM userdetails WHERE userdetailsid = ?
+        ');
+        $stmt->execute([$userdetailsid]);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['notifications'] == 'true')
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function updateNotifications($enable)
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $userRepository = new UserRepository();
+        $email = $_SESSION['user'] ?? null;
+
+        if (!$email) {
+            throw new Exception("User is not logged in.");
+        }
+
+        $userid = $userRepository->getIdByEmail($email);
+        if ($userid === null) {
+            throw new Exception("User not found.");
+        }
+
+        $user = $userRepository->getUser($email);
+        $userdetailsid = $userRepository->getUserDetailsId($user);
+
+        $stmt = $this->database->connect()->prepare('
+        UPDATE userdetails
+        SET notifications = :notifications
+        WHERE userdetailsid = :userdetailsid
+    ');
+
+        $notifications = $enable ? 'true' : 'false';
+
+        $stmt->bindParam(':notifications', $notifications, PDO::PARAM_STR);
+        $stmt->bindParam(':userdetailsid', $userdetailsid, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

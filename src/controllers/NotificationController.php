@@ -48,8 +48,8 @@ class NotificationController extends AppController
 
                     $message = "It's " . $time->format('H:i') . "! Take " . $userMedication->getMedicationName();
 
-                    // Sprawdzenie, czy powiadomienie już istnieje
-                    if (!$this->notificationRepository->notificationExists($date, $time->format('H:i'), $medicationSchedule->getId())) {
+                    // Sprawdzenie, czy powiadomienie już istnieje i czy użytkownik ma włączone powiadomienia
+                    if (!($this->notificationRepository->notificationExists($date, $time->format('H:i'), $medicationSchedule->getId())) && $this->notificationRepository->getUserNotificationSetting()) {
                         $notification = new Notification(0, $message, $time->format('H:i'), $date, false, $medicationSchedule->getId());
                         $this->notificationRepository->addNotification($notification);
                     }
@@ -65,5 +65,20 @@ class NotificationController extends AppController
         $this->notificationRepository->updateAllNotificationsStatus();
     }
 
+    public function settings()
+    {
+        $enableNotifications = $this->notificationRepository->getUserNotificationSetting();
+        return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
+    }
 
+    public function changeNotificationSetting()
+    {
+        $enableNotifications = $this->notificationRepository->getUserNotificationSetting();
+        if ($this->isPost()) {
+            $enableNotifications = isset($_POST['notifications']) && $_POST['notifications'] === 'on';
+            $this->notificationRepository->updateNotifications($enableNotifications);
+            return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
+        }
+        return $this->render('settings', ['userNotificationsEnabled' => $enableNotifications]);
+    }
 }

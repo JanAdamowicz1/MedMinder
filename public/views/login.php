@@ -35,7 +35,6 @@ if (session_status() == PHP_SESSION_NONE) {
                     <input name="email" type="text" placeholder=" E-mail">
                     <p>Password</p>
                     <input name="password" type="password" placeholder=" Password">
-                    <p class="forgot_text"><span class="highlight">Forgot password?</span></p>
                     <div class="text">
                         <?php 
                             if (isset($messages)){
@@ -53,7 +52,11 @@ if (session_status() == PHP_SESSION_NONE) {
                     ?>
                 <?php endif; ?>
             </div>
-            <p class="no_acc_text">Don't have an account?<span class="highlight"> Sign up</span></p> 
+            <p class="no_acc_text">Don't have an account?
+                <a href="signUp">
+                    <span class="highlight"> Sign up</span>
+                </a>
+            </p>
         </div>
     </div>
 </body>

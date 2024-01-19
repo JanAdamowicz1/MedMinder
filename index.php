@@ -18,6 +18,8 @@ Routing::get('logout', 'DefaultController');
 Routing::get('dosageSchedule', 'DefaultController');
 Routing::get('account', 'UserController');
 Routing::get('yourMedications', 'UsersMedicationsController');
+Routing::get('adminPanel', 'UserController');
+Routing::get('settings', 'NotificationController');
 
 
 Routing::post('login', 'SecurityController');
@@ -32,6 +34,8 @@ Routing::post('changeUsername', 'UserController');
 Routing::post('changeName', 'UserController');
 Routing::post('deleteMedication', 'UsersMedicationsController');
 Routing::post('setAllAsRead', 'UsersMedicationsController');
+Routing::post('addMedToDatabase', 'MedicationController');
+Routing::post('changeNotificationSetting', 'NotificationController');
 
 
 Routing::run($path);

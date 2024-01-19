@@ -16,7 +16,7 @@
                 <h1>Add custom medication</h1>
                 <form action="addCustomMed" method="POST">
                     <p>Name*</p>
-                    <input name="medicationName" type="text" placeholder=" Name">
+                    <input name="medicationName" type="text" placeholder=" Medication name">
                     <p>Form</p>
                     <input name="form" type="text" placeholder=" Form">
                     <p>Dose (mg)</p>

@@ -21,7 +21,7 @@
                 ?>
                 <div class="displayer">
                     <div class="med_info">
-                        <p>
+                        <p id="user_medication_info">
                             <span id="medicationName"><?= $userMedication->getMedicationName(); ?></span>
                             <span id="dosesPerIntakeID"><?= $medicationSchedule->getDosesPerIntake(); ?></span>
                             x

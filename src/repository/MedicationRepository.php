@@ -19,4 +19,20 @@ class MedicationRepository extends Repository {
 
         return $medications;
     }
+
+    public function addMedToDatabase(Medication $medication): int
+    {
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO medications (medicationname)
+            VALUES (?) RETURNING medicationid
+        ');
+
+        $stmt->execute([
+            $medication->getMedicationname()
+        ]);
+
+        $medicationId = $stmt->fetch(PDO::FETCH_ASSOC)['medicationid'];
+        return $medicationId;
+    }
+
 }

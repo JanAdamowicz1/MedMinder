@@ -10,10 +10,10 @@ class User
     private $username;
     private $firstname;
     private $lastname;
-    private $role = 'ROLE_USER';
+    private $role;
     private $image;
 
-    public function __construct(string $email, string $password, string $username, string $firstname, string $lastname, string $image)
+    public function __construct(string $email, string $password, string $username, string $firstname, string $lastname, string $image, int $roleid)
     {
         $this->email = $email;
         $this->password = $password;
@@ -21,6 +21,12 @@ class User
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->image = $image;
+        if($roleid == 1){
+            $this->role = self::ROLE_ADMIN;
+        }
+        else{
+            $this->role = self::ROLE_USER;
+        }
     }
 
     public function setEmail(string $email)
@@ -89,12 +95,4 @@ class User
         return $this->image;
     }
 
-
-    private function extractUsernameFromEmail(string $email): string
-    {
-    $parts = explode('@', $email);
-    $username = $parts[0];
-
-    return $username;
-    }
 }

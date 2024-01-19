@@ -59,4 +59,18 @@ class MedicationController extends AppController {
             echo json_encode($this->medicationCategoryRepository->getMedicationsByCategory($decoded['search']));
         }
     }
+
+    public function addMedToDatabase()
+    {
+        $categories = $this->categoryRepository->getCategories();
+        if ($this->isPost())
+        {
+            $medication = new Medication(0, $_POST['medicationName']);
+            $medicationID = $this->medicationRepository->addMedToDatabase($medication);
+            $categoryID = $_POST['category'];
+            $this->medicationCategoryRepository->associateMedicationWithCategory($medicationID, $categoryID);
+            return $this->render('adminPanel', ['categories' => $categories]);
+        }
+        return $this->render('adminPanel', ['categories' => $categories]);
+    }
 }

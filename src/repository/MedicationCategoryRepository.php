@@ -17,4 +17,17 @@ class MedicationCategoryRepository extends Repository {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function associateMedicationWithCategory(int $medicationID, int $categoryID)
+    {
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO medicationcategories (medicationid, categoryid)
+            VALUES (?, ?)
+        ');
+
+        $stmt->execute([
+            $medicationID,
+            $categoryID
+        ]);
+    }
 }

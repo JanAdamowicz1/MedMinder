@@ -8,11 +8,14 @@ require_once __DIR__.'/../repository/MedicationScheduleRepository.php';
 require_once __DIR__ .'/../models/User.php';
 require_once __DIR__.'/../repository/UserRepository.php';
 require_once __DIR__.'/../controllers/NotificationController.php';
+require_once __DIR__ .'/../models/Notification.php';
+require_once __DIR__.'/../repository/NotificationRepository.php';
 class UsersMedicationsController extends AppController
 {
     private $usersMedicationsRepository;
     private $medicationScheduleRepository;
     private $notificationController;
+    private $notificationRepository;
     private $message = [];
     public function __construct()
     {
@@ -20,6 +23,7 @@ class UsersMedicationsController extends AppController
         $this->usersMedicationsRepository = new UsersMedicationsRepository();
         $this->medicationScheduleRepository = new MedicationScheduleRepository();
         $this->notificationController = new NotificationController();
+        $this->notificationRepository = new NotificationRepository();
     }
 
     public function yourMedications()
@@ -35,7 +39,8 @@ class UsersMedicationsController extends AppController
     {
         $this->notificationController->generateNotifications();
         $usersMedications = $this->usersMedicationsRepository->getUsersMedications();
-        $this->render('homePage', ['usersMedications' => $usersMedications]);
+        $notifications = $this->notificationRepository->getUsersNotifications();
+        $this->render('homePage', ['usersMedications' => $usersMedications, 'notifications' => $notifications]);
     }
 
     public function addCustomMed()
@@ -69,11 +74,13 @@ class UsersMedicationsController extends AppController
         {
             $medicationSchedule = new MedicationSchedule($_POST['medicationId'], $_POST['dosesperintake'], $_POST['day'], $_POST['intake_time'], date('Y-m-d'));
             $this->medicationScheduleRepository->addDosageSchedule($medicationSchedule);
-            return $this->render('homePage',
-                ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications(),
-                    'messages' => $this->message]);
+//            return $this->render('homePage',
+//                ['usersMedications' => $this->usersMedicationsRepository->getUsersMedications(),
+//                    'messages' => $this->message]);
+            $this->homePage();
         }
-        return $this->render('homePage', ['messages' => $this->message]);
+        //return $this->render('homePage', ['messages' => $this->message]);
+        //$this->homePage();
     }
 
     public function showUsersMedicationsToCurrentDay()
@@ -90,4 +97,12 @@ class UsersMedicationsController extends AppController
             echo json_encode($this->usersMedicationsRepository->getMedicationByCurrentDay($decoded['dayOfWeek']));
         }
     }
+
+    public function setAllAsRead() {
+        if ($this->isPost()) {
+            $this->notificationController->setAllAsRead();
+            $this->homePage();
+        }
+    }
+
 }

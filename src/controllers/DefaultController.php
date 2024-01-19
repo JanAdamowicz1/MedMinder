@@ -30,6 +30,10 @@ class DefaultController extends AppController {
     public function dosageSchedule(){
         $this->render('dosageSchedule');
     }
+
+    public function settings(){
+        $this->render('settings');
+    }
 }
 
 ?>

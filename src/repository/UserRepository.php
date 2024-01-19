@@ -9,7 +9,7 @@ class UserRepository extends Repository
     public function getUser(string $email): ?User
     {
         $stmt = $this->database->connect()->prepare('
-        SELECT u.email, u.password, ud.firstname, ud.lastname, ud.username, ud.photo
+        SELECT u.email, u.password, u.roleid, ud.firstname, ud.lastname, ud.username, ud.photo
         FROM public.users u
         LEFT JOIN public.userdetails ud ON u.userdetailsid = ud.userdetailsid
         WHERE u.email = :email
@@ -30,7 +30,8 @@ class UserRepository extends Repository
             $userData['username'],
             $userData['firstname'] ?? '',
             $userData['lastname'] ?? '',
-            $userData['photo']
+            $userData['photo'],
+            $userData['roleid']
         );
     }
 
@@ -53,12 +54,13 @@ class UserRepository extends Repository
     public function addUser(User $user)
     {
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO userdetails (username)
-            VALUES (?)
+            INSERT INTO userdetails (username, notifications)
+            VALUES (?, ?)
         ');
 
         $stmt->execute([
-            $user->getUsername()
+            $user->getUsername(),
+            'true'
         ]);
 
         $stmt = $this->database->connect()->prepare('
@@ -70,7 +72,7 @@ class UserRepository extends Repository
             $user->getEmail(),
             $user->getPassword(),
             $this->getUserDetailsId($user),
-            $this->getRoleId('user')
+            $this->getRoleId($user->getRole())
         ]);
     }
 

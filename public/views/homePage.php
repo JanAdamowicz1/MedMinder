@@ -33,11 +33,15 @@ if (empty($_SESSION['user'])) {
                     <a href="account">
                         <button class="button"><i class="fa-solid fa-user"></i> Account</button>
                     </a>
-                    <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
+                    <a href="settings">
+                        <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
+                    </a>
                     <button class="button"><i class="fa-solid fa-question"></i> Help</button>
                     <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                    <a href="adminPanel">
                         <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
+                    </a>
                     <?php endif; ?>
                     <a href="logout">
                         <button class="button"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</button>
@@ -78,11 +82,15 @@ if (empty($_SESSION['user'])) {
                     <a href="yourMedications">
                         <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
                     </a>
-                    <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
+                    <a href="settings">
+                        <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
+                    </a>
                     <button class="button"><i class="fa-solid fa-question"></i> Help</button>
                     <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                    <a href="adminPanel">
                         <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
+                    </a>
                     <?php endif; ?>
                     <button class="button"><a href="logout"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</a></button>
                 </div>
@@ -117,23 +125,18 @@ if (empty($_SESSION['user'])) {
                     </div>
                     <div class="vertical-line"></div>
                     <div class="content_right">
-                        <div class="buttons_container">
-                            <a href="yourMedications">
-                                <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
-                            </a>
-                            <button class="button"><i class="fa-solid fa-clock-rotate-left"></i>Medication history</button>
-                        </div>
+                        <a href="yourMedications">
+                            <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
+                        </a>
                         <div class="calendar-controls">
                             <button class="button prev-month"><i class="fa-solid fa-arrow-left"></i></button>
                             <span class="calendar-title">November 2023</span>
                             <button class="button next-month"><i class="fa-solid fa-arrow-right"></i></button>
                         </div>
                         <div class="calendar" id="calendar_desktop"></div>
-                        <div class="buttons_container">
-                            <a href="addMed">
-                                <button class="button"><i class="fa-solid fa-circle-plus"></i>Add medication</button>
-                            </a>
-                        </div>
+                        <a href="addMed">
+                            <button class="button"><i class="fa-solid fa-circle-plus"></i>Add medication</button>
+                        </a>
                     </div>
                 </div>
                 <div class="bottom_bar">

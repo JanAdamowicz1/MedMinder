@@ -48,7 +48,11 @@ if (session_status() == PHP_SESSION_NONE) {
                         ?>
                     </div>
                     <button type="submit" class="button">Sign up</button> 
-                    <p class="already_text">Already have an account?<span class="highlight"> Log in</span></p> 
+                    <p class="already_text">Already have an account?
+                        <a href="login">
+                        <span class="highlight"> Log in</span>
+                        </a>
+                    </p>
                 </form>
                 <?php else : ?>
                     <?php

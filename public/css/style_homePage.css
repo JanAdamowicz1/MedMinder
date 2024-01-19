@@ -393,6 +393,10 @@
         align-items: center;
     }
 
+    .calendar-controls {
+        margin-top: 7vh;
+    }
+
     .calendar table {
         width: 100%;
         table-layout: fixed;
@@ -447,25 +451,11 @@
         width: 33vw;
     }
 
-    .content_right>.buttons_container {
-        margin: 3vh;
-        position: inherit;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .content_right>.buttons_container button{
-        height: 5vh;
-        width: auto;
-        font-size: 3vh;
-        margin: 2vh;
-    }
-
-    .content_right>.buttons_container:last-child button{
+    .content_right a .button {
         height: 9vh;
-        width: auto;
-        font-size: 4vh;
-        margin: 2vh;
+        width: 20vw;
+        font-size: 3vh;
+        margin-top: 9vh;
     }
 
     .bottom_bar {
