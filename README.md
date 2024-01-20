@@ -12,6 +12,7 @@ MedMinder is an application that will ensure you never forget to take your medic
 - <b>Notifications</b>: You will get notifications reminding you to take your medications
 
 ## Views
+<div align="center">
 <img src="public/assets/startPage-web.png">
 <img src="public/assets/signUp-web.png">
 <img src="public/assets/login-web.png">
@@ -36,6 +37,7 @@ MedMinder is an application that will ensure you never forget to take your medic
 <img src="public/assets/addMed-mob.png">
 <img src="public/assets/addCustomMed-mob.png">
 <img src="public/assets/dosageSchedule-mob.png">
+</div>
 
 ## Installation
 Before you begin, ensure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your system.

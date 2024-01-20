@@ -97,6 +97,11 @@ form .buttons_container button {
 }
 
 @media screen and (min-width: 1000px){
+    .add_med_container .displayer{
+        height: 80vh;
+        width: 70vw;
+    }
+
     .add_med_container h1 {
         top: 3vh;
         font-size: 4vh;
