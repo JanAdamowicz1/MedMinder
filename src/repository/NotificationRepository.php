@@ -7,17 +7,7 @@ class NotificationRepository extends Repository
 {
     public function addNotification(Notification $notification): void
     {
-        $userRepository = new UserRepository();
-        $email = $_SESSION['user'] ?? null;
-
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
+        $userid = $_SESSION['userid'];
 
         try
         {
@@ -93,17 +83,7 @@ class NotificationRepository extends Repository
 
     public function updateAllNotificationsStatus(): void
     {
-        $userRepository = new UserRepository();
-        $email = $_SESSION['user'] ?? null;
-
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
+        $userid = $_SESSION['userid'];
 
         $stmt = $this->database->connect()->prepare('
         UPDATE notifications
@@ -121,15 +101,6 @@ class NotificationRepository extends Repository
     {
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
-
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
 
         $user = $userRepository->getUser($email);
         $userdetailsid = $userRepository->getUserDetailsId($user);
@@ -153,15 +124,6 @@ class NotificationRepository extends Repository
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
-
         $user = $userRepository->getUser($email);
         $userdetailsid = $userRepository->getUserDetailsId($user);
 
@@ -176,5 +138,16 @@ class NotificationRepository extends Repository
         $stmt->bindParam(':notifications', $notifications, PDO::PARAM_STR);
         $stmt->bindParam(':userdetailsid', $userdetailsid, PDO::PARAM_INT);
         $stmt->execute();
+    }
+
+    public function deleteOldNotificationsForUser(): void
+    {
+        $userid = $_SESSION['userid'];
+
+        $stmt = $this->database->connect()->prepare("
+        DELETE FROM notifications 
+        WHERE userid = ? AND date < NOW() - INTERVAL '14 DAYS'
+    ");
+        $stmt->execute([$userid]);
     }
 }
