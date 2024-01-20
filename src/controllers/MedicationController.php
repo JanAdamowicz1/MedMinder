@@ -42,13 +42,22 @@ class MedicationController extends AppController {
         if ($this->isPost())
         {
             $medicationName = $_POST['medicationName'];
+            $categoryID = $_POST['category'];
             if($medicationName == ''){
                 $this->message[] = 'Medication name cannot be empty';
                 return $this->render('adminPanel', ['categories' => $categories, 'messages' => $this->message]);
             }
+
+            $existingMedication = $this->medicationRepository->checkMedicationInCategory($categoryID, $medicationName);
+
+            if ($existingMedication) {
+                $this->message[] = 'Medication already exists in the category: ' . $existingMedication['categoryname'];
+                return $this->render('adminPanel', ['categories' => $categories, 'messages' => $this->message]);
+            }
+
             $medication = new Medication(0, $medicationName);
             $medicationID = $this->medicationRepository->addMedToDatabase($medication);
-            $categoryID = $_POST['category'];
+
             $this->medicationCategoryRepository->associateMedicationWithCategory($medicationID, $categoryID);
             return $this->render('adminPanel', ['categories' => $categories]);
         }

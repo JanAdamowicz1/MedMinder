@@ -22,17 +22,52 @@ class MedicationRepository extends Repository {
 
     public function addMedToDatabase(Medication $medication): int
     {
-        $stmt = $this->database->connect()->prepare('
+        $medicationName = $medication->getMedicationname();
+
+        // Sprawdź, czy lek już istnieje w bazie danych
+        $existingMedicationID = $this->getMedicationIDByName($medicationName);
+
+        if ($existingMedicationID) {
+            // Jeśli lek już istnieje, zwróć jego istniejący identyfikator
+            return $existingMedicationID;
+        } else {
+            // Jeśli lek nie istnieje, dodaj go do bazy danych
+            $stmt = $this->database->connect()->prepare('
             INSERT INTO medications (medicationname)
             VALUES (?) RETURNING medicationid
         ');
 
-        $stmt->execute([
-            $medication->getMedicationname()
-        ]);
+            $stmt->execute([$medicationName]);
 
-        $medicationId = $stmt->fetch(PDO::FETCH_ASSOC)['medicationid'];
-        return $medicationId;
+            $medicationId = $stmt->fetch(PDO::FETCH_ASSOC)['medicationid'];
+            return $medicationId;
+        }
+    }
+    public function checkMedicationInCategory($categoryId, $medicationName) {
+        //zapytanie do widoku CategoriesAndMedications
+        $stmt = $this->database->connect()->prepare('
+        SELECT categoryname, medicationname
+        FROM CategoriesAndMedications
+        WHERE categoryid = ? AND medicationname = ?
+    ');
+
+        $stmt->execute([$categoryId, $medicationName]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    private function getMedicationIDByName(string $medicationName): ?int
+    {
+        $stmt = $this->database->connect()->prepare('
+        SELECT medicationid
+        FROM medications
+        WHERE medicationname = ?
+    ');
+
+        $stmt->execute([$medicationName]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? (int)$result['medicationid'] : null;
     }
 
 }

@@ -28,7 +28,6 @@ class DefaultController extends AppController {
     }
 
     public function startPage(){
-        $this->checkSession();
         $this->render('startPage');
     }
 
@@ -41,6 +40,7 @@ class DefaultController extends AppController {
     {
         $this->checkSession();
         $this->notificationController->generateNotifications();
+        $this->notificationRepository->deleteOldNotificationsForUser();
         $usersMedications = $this->usersMedicationsRepository->getUsersMedications();
         $notifications = $this->notificationRepository->getUsersNotifications();
         $this->render('homePage', ['usersMedications' => $usersMedications, 'notifications' => $notifications]);
@@ -49,8 +49,14 @@ class DefaultController extends AppController {
     public function adminPanel()
     {
         $this->checkSession();
-        $categories = $this->categoryRepository->getCategories();
-        return $this->render('adminPanel', ['categories' => $categories]);
+        $role = $_SESSION['role'];
+        if($role == 'admin') {
+            $categories = $this->categoryRepository->getCategories();
+            return $this->render('adminPanel', ['categories' => $categories]);
+        }
+        else {
+            throw new Exception('User is not an admin.');
+        }
     }
 
 }

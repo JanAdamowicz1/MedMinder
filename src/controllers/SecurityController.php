@@ -37,6 +37,7 @@ class SecurityController extends AppController
         if (password_verify($password, $hashedPassword)) {
             session_start();
             $_SESSION['user'] = htmlspecialchars($_POST['email']);
+            $_SESSION['userid'] = $this->userRepository->getIdByEmail($_POST['email']);
             $_SESSION['username'] = $user->getUsername();
             $_SESSION['image'] = $user->getImage();
             $_SESSION['role'] = $user->getRole();

@@ -6,17 +6,7 @@ class UsersMedicationsRepository extends Repository
 {
     public function addCustomMedication(UserMedication $userMedication): void
     {
-        $userRepository = new UserRepository();
-        $email = $_SESSION['user'] ?? null;
-
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
+        $userid = $_SESSION['userid'];
 
         $checkStmt = $this->database->connect()->prepare('
         SELECT usermedicationid FROM usermedications WHERE userid = ? AND medicationname = ? AND form = ? AND dose = ?
@@ -48,17 +38,7 @@ class UsersMedicationsRepository extends Repository
 
     public function addMedication(UserMedication $userMedication): void
     {
-        $userRepository = new UserRepository();
-        $email = $_SESSION['user'] ?? null;
-
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
+        $userid = $_SESSION['userid'];
 
         $medicationName = $userMedication->getMedicationName();
         $medicationid = $this->getMedicationIdByName($medicationName);
@@ -125,13 +105,7 @@ class UsersMedicationsRepository extends Repository
 
     public function getUsersMedications(): array
     {
-        $userRepository = new UserRepository();
-        $email = $_SESSION['user'] ?? null;
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
+        $userid = $_SESSION['userid'];
 
         $result = [];
 
@@ -173,13 +147,7 @@ class UsersMedicationsRepository extends Repository
 
     public function getMedicationByCurrentDay(string $currentDay)
     {
-        $userRepository = new UserRepository();
-        $email = $_SESSION['user'] ?? null;
-
-        $userid = $userRepository->getIdByEmail($email);
-        if ($userid === null) {
-            throw new Exception("User not found.");
-        }
+        $userid = $_SESSION['userid'];
 
         $stmt = $this->database->connect()->prepare('
         SELECT um.usermedicationid, um.userid, um.form, um.dose, um.medicationname, 

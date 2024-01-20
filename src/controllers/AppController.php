@@ -38,5 +38,9 @@ class AppController {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        $email = $_SESSION['user'] ?? null;
+        if (!$email) {
+            throw new Exception("User is not logged in.");
+        }
     }
 }
