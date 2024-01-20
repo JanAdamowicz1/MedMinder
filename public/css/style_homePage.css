@@ -106,13 +106,13 @@
 .sidepanel button {
     width: 70vw;
     height: 7vh;
-    font-size: 3vh; 
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+    font-size: 3vh;
+    margin-top: 0;
+    margin-bottom: 2vh;
 }
 
 #mySidepanel button:last-child {
-    margin-top: auto; 
+    margin-top: auto;
     margin-bottom: 2vh;
 }
 
@@ -193,6 +193,7 @@
 #notifications_list .displayer  p{
     max-width: 70vw;
     overflow: hidden;
+    font-size: 2vh;
 }
 
 .state-true {
@@ -356,8 +357,64 @@
     background-color: #f0f0f0;
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 2vh;
+    border: 1px solid #888;
+    width: 80vw;
+}
+
+.modal-content p {
+    color: var(--primary);
+    margin-top: 8vh;
+}
+
+.modal-content ul li {
+    font-size: 2vh;
+    padding-bottom: 1vh
+}
+
+.modal-content ul li:last-child {
+    color: red;
+}
+
+.close {
+    color: var(--primary);
+    float: left;
+    font-size: 5vh;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    cursor: pointer;
+}
+
 
 @media screen and (min-width: 1000px) {
+    .modal-content {
+        width: 50vw;
+        margin: auto auto;
+    }
+
+    .modal-content ul li {
+        font-size: 3vh;
+        padding-bottom: 1vh
+    }
 
     #notifications button {
         width: 20vw;
@@ -419,6 +476,10 @@
         font-size: 3vh;
     }
 
+    .calendar-title {
+        font-size: 3vh;
+    }
+
     .main_content{
         display: flex;
         flex-direction: row;
@@ -475,6 +536,7 @@
         margin-top: 5vh;
         margin-bottom: 0;
         text-align: center;
+        font-size: 5vh;
     }
 
     .highlight {

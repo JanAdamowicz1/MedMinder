@@ -7,6 +7,7 @@
         <script src="./public/js/dynamicSidebar.js"></script>
         <script src="./public/js/changeDate.js"></script>
         <script src="./public/js/calendar.js" defer></script>
+        <script src="./public/js/modal.js"></script>
         <title>HOME PAGE</title>
     </head>
     <body>
@@ -24,8 +25,7 @@
                     <a href="settings">
                         <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
                     </a>
-                    <button class="button"><i class="fa-solid fa-question"></i> Help</button>
-                    <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
+                    <button class="button help"><i class="fa-solid fa-question"></i> Help</button>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                     <a href="adminPanel">
                         <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
@@ -73,8 +73,7 @@
                     <a href="settings">
                         <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
                     </a>
-                    <button class="button"><i class="fa-solid fa-question"></i> Help</button>
-                    <button class="button"><i class="fa-solid fa-address-card"></i> Contact</button>
+                    <button class="button help"><i class="fa-solid fa-question"></i> Help</button>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                     <a href="adminPanel">
                         <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
@@ -160,6 +159,14 @@
                         </p>
                     </div>
                 <?php endforeach; ?>
+            </div>
+        </div>
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>
+                    <?php include 'helpText.php'; ?>
+                </p>
             </div>
         </div>
     </body>
