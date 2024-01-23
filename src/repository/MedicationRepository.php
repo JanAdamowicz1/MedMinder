@@ -43,7 +43,7 @@ class MedicationRepository extends Repository {
             return $medicationId;
         }
     }
-    public function checkMedicationInCategory($categoryId, $medicationName) {
+    public function checkMedicationInCategory(int $categoryId, string $medicationName) {
         //zapytanie do widoku CategoriesAndMedications
         $stmt = $this->database->connect()->prepare('
         SELECT categoryname, medicationname

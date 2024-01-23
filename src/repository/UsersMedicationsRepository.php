@@ -122,6 +122,10 @@ class UsersMedicationsRepository extends Repository
 
         $medicationsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        if ($medicationsData === false) {
+            throw new Exception("Can not receive users medications");
+        }
+
         foreach ($medicationsData as $medication) {
             $userMedication = new UserMedication(
                 $medication['medicationname'],

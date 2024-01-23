@@ -23,11 +23,11 @@ class MedicationScheduleRepository extends Repository
         }
         catch (PDOException $e)
         {
-
+            throw new Exception("Can not add data to dosage schedule");
         }
     }
 
-    public function updateUploadDate($medicationScheduleId, $newUploadDate)
+    public function updateUploadDate(int $medicationScheduleId, string $newUploadDate)
     {
         $stmt = $this->database->connect()->prepare('
         UPDATE medicationschedule SET uploaddate = ? WHERE scheduleid = ?

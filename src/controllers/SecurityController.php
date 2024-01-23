@@ -58,17 +58,21 @@ class SecurityController extends AppController
         $email = $_POST["email"];
         $password = $_POST["password"];
         $confirmedPassword = $_POST["confirmedPassword"];
-        
-        if ($password !== $confirmedPassword) {
-            return $this->render('signUp', ['messages' => ['Confirmed password and password must be the same']]);
-        }
 
-        $user = new User($email, password_hash($password, PASSWORD_BCRYPT), $email, '', '', '', $this->userRepository->getRoleId('user'));
+        if ($email !== '' && $password !== '' && $confirmedPassword !== '') {
 
-        if(!$this->userRepository->userExists($user)) {
-            $this->userRepository->addUser($user);
-            return $this->render('login', ['messages' => ['You\'ve been succesfully signed up!']]);
+            if ($password !== $confirmedPassword) {
+                return $this->render('signUp', ['messages' => ['Confirmed password and password must be the same']]);
+            }
+
+            $user = new User($email, password_hash($password, PASSWORD_BCRYPT), $email, '', '', '', $this->userRepository->getRoleId('user'));
+
+            if (!$this->userRepository->userExists($user)) {
+                $this->userRepository->addUser($user);
+                return $this->render('login', ['messages' => ['You\'ve been succesfully signed up!']]);
+            }
+            return $this->render('signUp', ['messages' => ['User with this email already exists']]);
         }
-        return $this->render('signUp', ['messages' => ['User with this email already exists']]);
+        return $this->render('signUp', ['messages' => ['Please complete all fields']]);
     }
 }

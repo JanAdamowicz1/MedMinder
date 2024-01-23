@@ -20,7 +20,6 @@ class UserRepository extends Repository
 
         if ($userData == false) {
             return null;
-            //dorobic exception (filmik 8 minuta 28)
         }
 
         return new User(
@@ -44,7 +43,7 @@ class UserRepository extends Repository
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result === false) {
-            return null;
+            throw new Exception("Can not receive user id");
         }
         return (int) $result['userid'];
     }
@@ -84,10 +83,15 @@ class UserRepository extends Repository
         $stmt->execute();
 
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data === false) {
+            throw new Exception("Can not receive user details id");
+        }
+
         return $data['userdetailsid'];
     }
 
-    public function getRoleId($roleName): int
+    public function getRoleId(string $roleName): int
     {
         $stmt = $this->database->connect()->prepare('
         SELECT roleid FROM public.roles WHERE rolename = :rolename
@@ -96,10 +100,15 @@ class UserRepository extends Repository
         $stmt->bindParam(':rolename', $roleName, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            throw new Exception("Can not receive role id");
+        }
+
         return $result ? (int)$result['roleid'] : 0;
     }
 
-    public function updateUserImage($user)
+    public function updateUserImage(User $user)
     {
         $userdetailsid = $this->getUserDetailsId($user);
         $stmt = $this->database->connect()->prepare('
@@ -114,7 +123,7 @@ class UserRepository extends Repository
         ]);
     }
 
-    public function updateUsername($user, $newUsername)
+    public function updateUsername(User $user, string $newUsername)
     {
         $userdetailsid = $this->getUserDetailsId($user);
         $user->setUsername($newUsername);
@@ -131,7 +140,7 @@ class UserRepository extends Repository
         ]);
     }
 
-    public function updateName($user)
+    public function updateName(User $user)
     {
         $userdetailsid = $this->getUserDetailsId($user);
 

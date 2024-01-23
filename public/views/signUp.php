@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
     <link rel="stylesheet" type="text/css" href="public/css/style_signUp.css">
     <script src="https://kit.fontawesome.com/c630670396.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="./public/js/script.js" defer></script>
+    <script type="text/javascript" src="./public/js/validateEmail.js" defer></script>
     <title>SIGN UP</title>
 </head>
 <body>

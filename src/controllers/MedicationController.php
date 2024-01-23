@@ -59,7 +59,8 @@ class MedicationController extends AppController {
             $medicationID = $this->medicationRepository->addMedToDatabase($medication);
 
             $this->medicationCategoryRepository->associateMedicationWithCategory($medicationID, $categoryID);
-            return $this->render('adminPanel', ['categories' => $categories]);
+            $this->message[] = 'Medication added successfully';
+            return $this->render('adminPanel', ['categories' => $categories, 'messages' => $this->message]);
         }
         return $this->render('adminPanel', ['categories' => $categories]);
     }

@@ -32,7 +32,7 @@ class NotificationRepository extends Repository
         }
     }
 
-    public function notificationExists($date, $time, $medicationScheduleId): bool
+    public function notificationExists(string $date, string $time, int $medicationScheduleId): bool
     {
         $stmt = $this->database->connect()->prepare('
         SELECT * FROM notifications WHERE date = ? AND time = ? AND scheduleid = ?
@@ -65,6 +65,10 @@ class NotificationRepository extends Repository
             $notifications = [];
 
             foreach ($notificationsData as $data) {
+                if(!$data['scheduleid']){
+                    //na wypadek jesli ktos usunie lek z listy, a powiadomienie zostaje na liscie
+                    $data['scheduleid'] = 0;
+                }
                 $notification = new Notification(
                     $data['notificationid'],
                     $data['message'],
@@ -77,7 +81,7 @@ class NotificationRepository extends Repository
             }
             return $notifications;
         } catch (PDOException $e) {
-            throw new Exception();
+            throw new Exception("Can not receive notifications.");
         }
     }
 
@@ -119,7 +123,7 @@ class NotificationRepository extends Repository
         return false;
     }
 
-    public function updateNotifications($enable)
+    public function updateNotifications(bool $enable)
     {
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;

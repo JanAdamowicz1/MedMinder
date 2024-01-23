@@ -10,6 +10,11 @@ class CategoryRepository extends Repository {
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            throw new Exception("Can not receive categories");
+        }
+
         $categories = [];
 
         foreach ($result as $row) {
