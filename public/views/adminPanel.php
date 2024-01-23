@@ -7,7 +7,7 @@
     <title>ADMIN PANEL</title>
 </head>
 <body>
-<div class="admin_panel_container">
+<div class="common-container">
     <div class="displayer">
         <a href="homePage">
             <i class="fa-solid fa-xmark"></i></i>

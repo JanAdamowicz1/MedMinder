@@ -7,7 +7,7 @@
     <title>SETTINGS</title>
 </head>
 <body>
-<div class="settings_container">
+<div class="common-container">
     <div class="displayer">
         <a href="homePage">
             <i class="fa-solid fa-xmark"></i></i>

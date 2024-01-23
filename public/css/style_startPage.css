@@ -1,25 +1,16 @@
-.start_page_container{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .elements{
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 60vh;
-    border-radius: 40px 40px 0px 0px;
+    border-radius: 40px 40px 0 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: rgba(168, 169, 190, 0.85);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .logo {
@@ -39,7 +30,7 @@
     display: none; 
 }
 
-.start_page_container .buttons_container {
+.buttons_container {
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -67,12 +58,12 @@
     margin-top: -20vh;
 }
 
-.start_page_container .text h1 {
+.text h1 {
     font-size: 4.5em; 
     margin-bottom: 2vh; 
 }
 
-.start_page_container .text p {
+.text p {
     font-size: 2.5em; 
     margin-top: 0;
 }
@@ -82,26 +73,16 @@
 }
 
 @media screen and (min-width: 1000px){
-    
-    .start_page_container{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    
+
     .logo {
         display: flex;
         justify-content: center;
         align-items: center; 
         height: 20vh;
         position: absolute;
-        margin-top: 5vh; /* 5vh from the top */
+        margin-top: 5vh;
     }
-    
-    
+
     .logo img:first-child {
         display: flex;
         position: absolute;
@@ -120,22 +101,9 @@
     
     .elements{
         position: static;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         border-radius: 20px;
-        background: rgba(168, 169, 190, 0.85);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        width: 40%;
+        width: 40vw;
         height: 80vh;
-    }
-    
-    .buttons_container{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
     }
 
     .button {
@@ -145,20 +113,16 @@
     }
     
     .text{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         padding-bottom: 10vh;
         margin-top: 30vh;
     }
     
-    .start_page_container .text h1 {
+    .text h1 {
         font-size: 5vh;
         margin-bottom: 2vh; 
     }
     
-    .start_page_container .text p {
+    .text p {
         font-size: 3vh;
         margin-top: 0;
     }

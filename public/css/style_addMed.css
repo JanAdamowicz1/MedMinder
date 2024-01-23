@@ -1,23 +1,9 @@
-.add_med_container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
+.displayer{
+    height: 80vh;
+    width: 90vw;
 }
 
-.add_med_container .displayer{
-    height: 80%;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.add_med_container i {
+i {
     position: absolute;
     top: 1vh;
     left: 1vh;
@@ -25,7 +11,7 @@
     color: var(--primary);
 }
 
-.add_med_container h1 {
+h1 {
     position: absolute;
     text-align: center;
     top: 5vh;
@@ -56,17 +42,17 @@ form input, select{
     margin-top: 5vh;
 }
 
-.add_med_container form{
+form{
     position: absolute;
     top: -15vh;
 }
 
-.add_med_container form p{
+form p{
     color: var(--primary);
     font-size: 2vh;
 }
 
-.add_med_container .buttons_container{
+.buttons_container{
     margin-top: 50vh;
     display: flex;
     flex-direction: column;
@@ -76,7 +62,7 @@ form input, select{
     align-self: center;
 }
 
-.add_med_container .buttons_container p{
+.buttons_container p{
     font-size: 2vh;
 }
 
@@ -97,17 +83,17 @@ form .buttons_container button {
 }
 
 @media screen and (min-width: 1000px){
-    .add_med_container .displayer{
+    .displayer{
         height: 80vh;
         width: 70vw;
     }
 
-    .add_med_container h1 {
+    h1 {
         top: 3vh;
         font-size: 4vh;
     }
 
-    .add_med_container i{
+    i{
         top: 3vh;
         left: 3vh;
         font-size: 4vh;

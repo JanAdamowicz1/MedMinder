@@ -8,7 +8,7 @@
     <title>SIGN UP</title>
 </head>
 <body>
-    <div class="sign_up_container">
+    <div class="common-container">
         <a href="startPage">
             <i class="fa-solid fa-arrow-left"></i>
         </a>

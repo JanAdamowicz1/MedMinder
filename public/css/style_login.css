@@ -1,4 +1,4 @@
-.log_in_container i {
+i {
     position: absolute;
     top: 1vh;
     left: 1vh;
@@ -6,21 +6,11 @@
     color: var(--primary);
 }
 
-.log_in_container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
-}
-
-.log_in_container .elements{
+.elements{
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 70vh;
     border-radius: 40px 40px 0px 0px;
     display: flex;
@@ -28,20 +18,7 @@
     justify-content: center;
     align-items: center;
     background: rgba(168, 169, 190, 0.85);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); 
-}
-
-.pill_logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20vh;
-    width: 20vh;
-    position: relative;
-    margin-top: -70vh; 
-    background-color: rgba(168, 169, 190, 0.85);
-    border-radius: 50%;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .pill_logo img {
@@ -53,7 +30,7 @@
     display: none;
 }
 
-.log_in_container .text p{
+.text p{
     margin-top: 10vh; 
     font-size: 5vh;
     color: var(--primary);
@@ -83,12 +60,12 @@ form input{
     margin-top: -5vh; 
 }
 
-.log_in_container .form_container form p {
+.form_container form p {
     color: var(--primary);
     font-size: 2vh;
 }
 
-.log_in_container .form_container .text {
+.form_container .text {
     color: var(--primary);
     font-size: 2vh;
     text-align: center;
@@ -103,8 +80,7 @@ form input{
     padding: 0 0;
 }
 
-
-.log_in_container .no_acc_text {
+.no_acc_text {
     text-align: center;
     font-size: 2vh;
     color: var(--primary);
@@ -119,15 +95,6 @@ form input{
 }
 
 @media screen and (min-width: 1000px){
-    
-    .log_in_container{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
 
     .pill_logo {
         display: none;
@@ -159,15 +126,9 @@ form input{
         margin-bottom: 3vh;
     }
     
-    .log_in_container .elements{
+    .elements{
         position: static;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         border-radius: 20px;
-        background: rgba(168, 169, 190, 0.85);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         width: 40vw;
         min-height: 85vh;
     }
@@ -185,10 +146,9 @@ form input{
     }
 
     form .login .text{
-        margin-top: 0vh;
-        margin-bottom: 0vh;
+        margin-top: 0;
+        margin-bottom: 0;
     }
-
 
     .form_container {
         height: 50vh;
@@ -202,15 +162,8 @@ form input{
     .button {
         height: 6vh;
         width: 10vw;
-        margin-top: 0vh;
+        margin-top: 0;
         margin-bottom: 15vh;
-    }
-    
-    .text{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
 
     .no_acc_text {

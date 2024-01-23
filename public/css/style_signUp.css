@@ -6,29 +6,6 @@ i {
     color: var(--primary);
 }
 
-.sign_up_container{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
-}
-
-.pill_logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20vh;
-    width: 20vh;
-    position: relative;
-    margin-top: -70vh;
-    background-color: rgba(168, 169, 190, 0.85);
-    border-radius: 50%;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
 .pill_logo img {
     width: 10vh; 
     height: auto; 
@@ -53,7 +30,7 @@ i {
     display: none;
 }
 
-.sign_up_container .text p{
+.text p{
     font-size: 5vh;
     color: var(--primary);
 }
@@ -63,8 +40,8 @@ form{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative; /* lub position: absolute; lub position: fixed; */
-    z-index: 9999; /* Wybierz dowolną wysoką wartość z-index */
+    position: relative;
+    z-index: 9999;
     margin-top: 5vh;
 }
 
@@ -75,7 +52,7 @@ form input{
     font-size: 2vh;
 }
 
-.sign_up_container .form_container form p {
+.form_container form p {
     color: var(--primary);
     font-size: 2vh;
 }
@@ -94,14 +71,14 @@ form input{
     margin-top: 5vh;
 }
 
-.sign_up_container .form_container .signup .text {
+.form_container .signup .text {
     color: var(--primary);
     font-size: 2vh;
     text-align: center;
     margin-top: 0;
 }
 
-.sign_up_container .already_text {
+.already_text {
     text-align: center;
     font-size: 2.5em;
     color: var(--primary);
@@ -115,15 +92,6 @@ form input{
 
 
 @media screen and (min-width: 1000px){
-    
-    .sign_up_container{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
 
     .pill_logo {
         display: none;
@@ -156,13 +124,7 @@ form input{
     
     .elements{
         position: static;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         border-radius: 20px;
-        background: rgba(168, 169, 190, 0.85);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         width: 40vw;
         height: 90vh;
     }
@@ -173,8 +135,8 @@ form input{
 
     form{
         width: 30vw;
-        margin-top: 0vh;
-        margin-bottom: 0vh;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
     form input{
@@ -190,10 +152,6 @@ form input{
     }
     
     .text{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         margin-top: 35vh;
     }
  

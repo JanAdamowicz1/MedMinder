@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
-        // Check if elements exist and then get their values
         const medicationElem = document.querySelector('#medication');
         const medicationNameInput = document.querySelector('input[name="medicationName"]');
         const formInput = document.querySelector('input[name="form"]');

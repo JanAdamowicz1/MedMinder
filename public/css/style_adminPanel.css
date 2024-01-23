@@ -1,23 +1,10 @@
-.admin_panel_container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
-}
-
-.admin_panel_container .displayer{
+.displayer{
     height: 90vh;
     width: 80vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
-    position: relative;
 }
 
-.admin_panel_container i {
+i {
     position: absolute;
     top: 2vh;
     left: 2vh;
@@ -25,13 +12,13 @@
     color: var(--primary);
 }
 
-.admin_panel_container h1 {
+h1 {
     position: absolute;
     top: 0;
     font-size: 5vh;
 }
 
-.admin_panel_container h2 {
+h2 {
     margin-top: 10vh;
     font-size: 2.5vh;
 }

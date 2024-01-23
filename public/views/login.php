@@ -8,7 +8,7 @@
     <title>LOG IN</title>
 </head>
 <body>
-    <div class="log_in_container">
+    <div class="common-container">
         <a href="startPage">
             <i class="fa-solid fa-arrow-left"></i>
         </a>

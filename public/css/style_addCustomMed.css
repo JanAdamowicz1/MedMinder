@@ -1,23 +1,9 @@
-.add_custom_med_container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
+.displayer{
+    height: 70vh;
+    width: 90vw;
 }
 
-.add_custom_med_container .displayer{
-    height: 70%;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.add_custom_med_container i {
+i {
     position: absolute;
     top: 1vh;
     left: 1vh;
@@ -25,7 +11,7 @@
     color: var(--primary);
 }
 
-.add_custom_med_container h1 {
+h1 {
     position: absolute;
     top: 5vh;
     font-size: 2.5vh;
@@ -35,7 +21,8 @@ form{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative; 
+    position: absolute;
+    top: -15vh;
     z-index: 9999; 
     margin-top: 35vh;
 }
@@ -54,30 +41,24 @@ form input{
     margin-top: 5vh;
 }
 
-
-.add_custom_med_container form{
-    position: absolute;
-    top: -15vh;
-}
-
-.add_custom_med_container form p{
+form p{
     color: var(--primary);
     font-size: 2vh;
 }
 
-.add_custom_med_container .buttons_container{
+.buttons_container{
     margin-top: 50vh;
     position: inherit;
     align-self: center;
 }
 
-.add_custom_med_container .buttons_container button{
+.buttons_container button{
     width: 30vw; 
     height: 5vh;
     font-size: 2.5vh;
 }
 
-.add_custom_med_container p:last-child {
+p:last-child {
     position: absolute;
     bottom: 2vh;
     left: 3vw;
@@ -86,28 +67,28 @@ form input{
 
 @media screen and (min-width: 1000px){
 
-    .add_custom_med_container .displayer{
+    .displayer{
         height: 80vh;
         width: 70vw;
     }
 
-    .add_custom_med_container h1 {
+    h1 {
         top: 3vh;
         font-size: 4vh;
     }
 
-    .add_custom_med_container i {
+    i {
         top: 3vh;
         left: 3vh;
     }
 
-    .add_custom_med_container .buttons_container p {
+    .buttons_container p {
         bottom: -10vh;
         left: -36vw;
         font-size: 2vh; 
     }
 
-    .add_custom_med_container .buttons_container button{
+    .buttons_container button{
         width: 10vw; 
         height: 8vh;
         font-size: 3vh;

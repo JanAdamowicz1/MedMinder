@@ -85,7 +85,7 @@ class UsersMedicationsRepository extends Repository
         $stmt->bindParam(':usermedicationid', $usermedicationid, PDO::PARAM_INT);
         $stmt->execute();
 
-        //check if there are no more entries associated with this medication
+        //sprawdzenie czy z lekarstwem jest powiazany jeszcze jakis wpis
         $checkStmt = $this->database->connect()->prepare('
         SELECT COUNT(*) FROM medicationschedule WHERE usermedicationid = :usermedicationid
     ');
@@ -94,7 +94,7 @@ class UsersMedicationsRepository extends Repository
 
         $count = $checkStmt->fetchColumn();
         if ($count == 0) {
-            // If no more schedules are linked, delete the medication
+            // Jesli nie ma zadnych schedule zwiazanych z lekarstwem, usun lekarstwo
             $deleteStmt = $this->database->connect()->prepare('
             DELETE FROM usermedications WHERE usermedicationid = :usermedicationid
         ');

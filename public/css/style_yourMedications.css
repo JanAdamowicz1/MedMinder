@@ -1,13 +1,4 @@
-.yourMedications_container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background: lightgray url('../assets/background.jpg') 50% / cover no-repeat;
-}
-
-.yourMedications_container i {
+i {
     position: absolute;
     top: 2vh;
     left: 2vh;
@@ -19,26 +10,21 @@ h1{
     font-size: 3vh;
 }
 
-.yourMedications_container>.displayer {
+.common-container>.displayer {
     height: 80vh;
     width: 80vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-.yourMedications_container .med_list .displayer {
+.med_list .displayer {
     height: 10vh;
     font-size: 2vh;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     margin-top: 0;
     margin-bottom: 2vh;
 }
 
-.yourMedications_container .med_list .button {
+.med_list .button {
     height: 4vh;
     width: 15vw;
     margin-right: 2vw;
@@ -47,7 +33,7 @@ h1{
     padding-bottom: 0;
 }
 
-.yourMedications_container .med_list {
+.med_list {
     display: flex;
     height: 60vh;
     width: 80vw;
@@ -67,7 +53,7 @@ h1{
 }
 
 .time-display span {
-    margin-right: 5px; /* Adjust as needed for spacing */
+    margin-right: 5px;
 }
 
 #user_medication_info {
@@ -82,11 +68,11 @@ h1{
         font-size: 5vh;
     }
 
-    .yourMedications_container .med_list .displayer {
+    .med_list .displayer {
         font-size: 3vh;
     }
 
-    .yourMedications_container .med_list .button {
+    .med_list .button {
         font-size: 3vh;
         width: 10vw;
         padding-top: 3vh;

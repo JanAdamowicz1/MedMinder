@@ -1,3 +1,9 @@
+.displayer{
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
 .home_page_container .content{
     display: flex;
     flex-direction: column;
@@ -21,8 +27,8 @@
 }
 
 .header{
-    position: sticky; /* Ustaw header jako sticky */
-    top: 0; /* Umieść go na górze ekranu */
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: row;
 }
@@ -35,10 +41,10 @@
 }
 
 .user_photo img{
-    height: 7vh;        /* Wysokość zdjęcia */
-    width: 7vh;         /* Szerokość zdjęcia */
-    border-radius: 50%;  /* Tworzy okrągłe zdjęcie */
-    object-fit: cover;   /* Zapewnia, że zdjęcie będzie odpowiednio wypełniać obszar bez rozciągania */
+    height: 7vh;
+    width: 7vh;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .user_text {
@@ -78,17 +84,17 @@
 }
 
 .sidepanel {
-  height: 90vh; /* Specify a height */
+  height: 90vh;
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
-  z-index: 2; /* Stay on top */
+  z-index: 2;
   top: 0;
   right: 0;
   background: #FFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px 0px 0px 40px;
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 10vh; /* Place content 60px from the top */
+  padding-top: 10vh;
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
   display: flex;
   flex-direction: column;
@@ -126,10 +132,6 @@
     height: 7vw;
     width: 35vw;
     font-size: 6vw;
-    text-align: center;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
 }
 
 .home_page_container .content_left>.buttons_container .button{
@@ -499,9 +501,9 @@
     }
 
     .main_content .vertical-line {
-        width: 0.2vw; /* Grubość linii */
-        height: 85vh; /* Wysokość linii */
-        background-color: var(--primary); /* Kolor linii */
+        width: 0.2vw;
+        height: 85vh;
+        background-color: var(--primary);
         margin-top: 2.5vh;
     }
 
@@ -536,7 +538,7 @@
         margin-top: 5vh;
         margin-bottom: 0;
         text-align: center;
-        font-size: 5vh;
+        font-size: 4vh;
     }
 
     .highlight {
@@ -547,9 +549,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-         margin-top: 2vh; 
-        justify-content: flex-start; /* Ustawienie przycisków przy górze kontenera */
-        height: 100%; /* Ustawienie kontenera na pełną wysokość */
+        margin-top: 2vh;
+        justify-content: flex-start;
+        height: 100%;
     }
 
     .home_page_container .navbar .buttons_container button {
@@ -563,9 +565,13 @@
         color: rgb(21, 10, 98);
     }
 
-    .home_page_container .navbar .buttons_container a:last-child {
+    .home_page_container .navbar .buttons_container button:last-child {
         margin-top: auto; 
         margin-bottom: 2vh;
+    }
+
+    .home_page_container .navbar .buttons_container a {
+        color: rgb(21, 10, 98);
     }
 
     .logo {
@@ -672,7 +678,6 @@
     }
 
     .user_info {
-        margin-top: 0vh;
         margin-top: auto; /* Wyśrodkowanie w pionie */
         margin-bottom: auto;
     }

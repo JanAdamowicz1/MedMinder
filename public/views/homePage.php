@@ -19,21 +19,7 @@
                 </div>
                 <h1>Med<span class="highlight">Minder</span></h1>
                 <div class="buttons_container">
-                    <a href="account">
-                        <button class="button"><i class="fa-solid fa-user"></i> Account</button>
-                    </a>
-                    <a href="settings">
-                        <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
-                    </a>
-                    <button class="button help"><i class="fa-solid fa-question"></i> Help</button>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                    <a href="adminPanel">
-                        <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
-                    </a>
-                    <?php endif; ?>
-                    <a href="logout">
-                        <button class="button"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</button>
-                    </a>
+                    <?php include 'homePage_buttons.php'; ?>
                 </div>
             </nav>
             <div class="content">
@@ -64,22 +50,10 @@
                 </div>
                 <div id="mySidepanel" class="sidepanel">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="account">
-                        <button class="button"><i class="fa-solid fa-user"></i> Account</button>
-                    </a>
                     <a href="yourMedications">
                         <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
                     </a>
-                    <a href="settings">
-                        <button class="button"><i class="fa-solid fa-cog"></i> Settings</button>
-                    </a>
-                    <button class="button help"><i class="fa-solid fa-question"></i> Help</button>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                    <a href="adminPanel">
-                        <button class="button"><i class="fa-solid fa-tools"></i> Admin Panel</button>
-                    </a>
-                    <?php endif; ?>
-                    <button class="button"><a href="logout"><i class="fa-solid fa-right-from-bracket"></i></i> Log out</a></button>
+                    <?php include 'homePage_buttons.php'; ?>
                 </div>
                 <div class = "main_content">
                     <div class = "content_left">
@@ -89,11 +63,7 @@
                         </div>
                         <div id="sideCalendar" class="sidepanel">
                             <a href="javascript:void(0)" class="closebtn" onclick="closeCalendar()">&times;</a>
-                            <div class="calendar-controls">
-                                <button class="button prev-month"><i class="fa-solid fa-arrow-left"></i></button>
-                                <span class="calendar-title">November 2023</span>
-                                <button class="button next-month"><i class="fa-solid fa-arrow-right"></i></button>
-                            </div>
+                            <?php include 'calendar_controls.php'; ?>
                             <div class="calendar" id="calendar_mobile"></div>
                         </div>
                         <div class="date">
@@ -115,11 +85,7 @@
                         <a href="yourMedications">
                             <button class="button"><i class="fa-solid fa-capsules"></i>Your medications</button>
                         </a>
-                        <div class="calendar-controls">
-                            <button class="button prev-month"><i class="fa-solid fa-arrow-left"></i></button>
-                            <span class="calendar-title">November 2023</span>
-                            <button class="button next-month"><i class="fa-solid fa-arrow-right"></i></button>
-                        </div>
+                        <?php include 'calendar_controls.php'; ?>
                         <div class="calendar" id="calendar_desktop"></div>
                         <a href="addMed">
                             <button class="button"><i class="fa-solid fa-circle-plus"></i>Add medication</button>
@@ -173,10 +139,6 @@
 
 
 <template id="usermedications_template">
-<!--    --><?php
-//    $userMedication = $pair['userMedication'];
-//    $medicationSchedule = $pair['medicationSchedule'];
-//    ?>
     <div class="displayer">
         <div class="left-text">
             <p id="medicationName">medicationName</p>

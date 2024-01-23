@@ -9,7 +9,7 @@
     <title>ADD MED</title>
 </head>
 <body>
-<div class="add_med_container">
+<div class="common-container">
     <div class="displayer">
         <a href="homePage">
             <i class="fa-solid fa-xmark"></i></i>
