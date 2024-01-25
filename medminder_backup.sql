@@ -5,7 +5,7 @@
 -- Dumped from database version 16.1 (Debian 16.1-1.pgdg120+1)
 -- Dumped by pg_dump version 16.1
 
--- Started on 2024-01-21 12:28:39 UTC
+-- Started on 2024-01-24 10:11:59 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -52,7 +52,7 @@ CREATE SEQUENCE public.categories_categoryid_seq
 ALTER SEQUENCE public.categories_categoryid_seq OWNER TO docker;
 
 --
--- TOC entry 3458 (class 0 OID 0)
+-- TOC entry 3463 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: categories_categoryid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -120,7 +120,7 @@ CREATE SEQUENCE public.medicationcategories_medicationcategoriesid_seq
 ALTER SEQUENCE public.medicationcategories_medicationcategoriesid_seq OWNER TO docker;
 
 --
--- TOC entry 3459 (class 0 OID 0)
+-- TOC entry 3464 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: medicationcategories_medicationcategoriesid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -145,7 +145,7 @@ CREATE SEQUENCE public.medications_medicationid_seq
 ALTER SEQUENCE public.medications_medicationid_seq OWNER TO docker;
 
 --
--- TOC entry 3460 (class 0 OID 0)
+-- TOC entry 3465 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: medications_medicationid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -187,7 +187,7 @@ CREATE SEQUENCE public.medicationschedule_scheduleid_seq
 ALTER SEQUENCE public.medicationschedule_scheduleid_seq OWNER TO docker;
 
 --
--- TOC entry 3461 (class 0 OID 0)
+-- TOC entry 3466 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: medicationschedule_scheduleid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -230,7 +230,7 @@ CREATE SEQUENCE public.notifications_notificationid_seq
 ALTER SEQUENCE public.notifications_notificationid_seq OWNER TO docker;
 
 --
--- TOC entry 3462 (class 0 OID 0)
+-- TOC entry 3467 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: notifications_notificationid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -268,7 +268,7 @@ CREATE SEQUENCE public.roles_roleid_seq
 ALTER SEQUENCE public.roles_roleid_seq OWNER TO docker;
 
 --
--- TOC entry 3463 (class 0 OID 0)
+-- TOC entry 3468 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: roles_roleid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -294,6 +294,38 @@ CREATE TABLE public.userdetails (
 ALTER TABLE public.userdetails OWNER TO docker;
 
 --
+-- TOC entry 216 (class 1259 OID 16761)
+-- Name: users; Type: TABLE; Schema: public; Owner: docker
+--
+
+CREATE TABLE public.users (
+    userid integer NOT NULL,
+    email character varying(255) NOT NULL,
+    userdetailsid integer,
+    password character varying(255) NOT NULL,
+    roleid integer
+);
+
+
+ALTER TABLE public.users OWNER TO docker;
+
+--
+-- TOC entry 234 (class 1259 OID 16949)
+-- Name: user_view; Type: VIEW; Schema: public; Owner: docker
+--
+
+CREATE VIEW public.user_view AS
+ SELECT users.userid,
+    users.email,
+    userdetails.firstname,
+    userdetails.lastname
+   FROM (public.users
+     JOIN public.userdetails ON ((users.userdetailsid = userdetails.userdetailsid)));
+
+
+ALTER VIEW public.user_view OWNER TO docker;
+
+--
 -- TOC entry 227 (class 1259 OID 16869)
 -- Name: userdetails_userdetailsid_seq; Type: SEQUENCE; Schema: public; Owner: docker
 --
@@ -310,7 +342,7 @@ CREATE SEQUENCE public.userdetails_userdetailsid_seq
 ALTER SEQUENCE public.userdetails_userdetailsid_seq OWNER TO docker;
 
 --
--- TOC entry 3464 (class 0 OID 0)
+-- TOC entry 3469 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: userdetails_userdetailsid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -352,29 +384,13 @@ CREATE SEQUENCE public.usermedications_usermedicationid_seq
 ALTER SEQUENCE public.usermedications_usermedicationid_seq OWNER TO docker;
 
 --
--- TOC entry 3465 (class 0 OID 0)
+-- TOC entry 3470 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: usermedications_usermedicationid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
 
 ALTER SEQUENCE public.usermedications_usermedicationid_seq OWNED BY public.usermedications.usermedicationid;
 
-
---
--- TOC entry 216 (class 1259 OID 16761)
--- Name: users; Type: TABLE; Schema: public; Owner: docker
---
-
-CREATE TABLE public.users (
-    userid integer NOT NULL,
-    email character varying(255) NOT NULL,
-    userdetailsid integer,
-    password character varying(255) NOT NULL,
-    roleid integer
-);
-
-
-ALTER TABLE public.users OWNER TO docker;
 
 --
 -- TOC entry 215 (class 1259 OID 16760)
@@ -393,7 +409,7 @@ CREATE SEQUENCE public.users_userid_seq
 ALTER SEQUENCE public.users_userid_seq OWNER TO docker;
 
 --
--- TOC entry 3466 (class 0 OID 0)
+-- TOC entry 3471 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: users_userid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -402,7 +418,7 @@ ALTER SEQUENCE public.users_userid_seq OWNED BY public.users.userid;
 
 
 --
--- TOC entry 3249 (class 2604 OID 16794)
+-- TOC entry 3253 (class 2604 OID 16794)
 -- Name: categories categoryid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -410,7 +426,7 @@ ALTER TABLE ONLY public.categories ALTER COLUMN categoryid SET DEFAULT nextval('
 
 
 --
--- TOC entry 3250 (class 2604 OID 16853)
+-- TOC entry 3254 (class 2604 OID 16853)
 -- Name: medicationcategories medicationcategoriesid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -418,7 +434,7 @@ ALTER TABLE ONLY public.medicationcategories ALTER COLUMN medicationcategoriesid
 
 
 --
--- TOC entry 3248 (class 2604 OID 16780)
+-- TOC entry 3252 (class 2604 OID 16780)
 -- Name: medications medicationid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -426,7 +442,7 @@ ALTER TABLE ONLY public.medications ALTER COLUMN medicationid SET DEFAULT nextva
 
 
 --
--- TOC entry 3257 (class 2604 OID 16897)
+-- TOC entry 3261 (class 2604 OID 16897)
 -- Name: medicationschedule scheduleid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -434,7 +450,7 @@ ALTER TABLE ONLY public.medicationschedule ALTER COLUMN scheduleid SET DEFAULT n
 
 
 --
--- TOC entry 3258 (class 2604 OID 16917)
+-- TOC entry 3262 (class 2604 OID 16917)
 -- Name: notifications notificationid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -442,7 +458,7 @@ ALTER TABLE ONLY public.notifications ALTER COLUMN notificationid SET DEFAULT ne
 
 
 --
--- TOC entry 3254 (class 2604 OID 16844)
+-- TOC entry 3258 (class 2604 OID 16844)
 -- Name: roles roleid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -450,7 +466,7 @@ ALTER TABLE ONLY public.roles ALTER COLUMN roleid SET DEFAULT nextval('public.ro
 
 
 --
--- TOC entry 3255 (class 2604 OID 16873)
+-- TOC entry 3259 (class 2604 OID 16873)
 -- Name: userdetails userdetailsid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -458,7 +474,7 @@ ALTER TABLE ONLY public.userdetails ALTER COLUMN userdetailsid SET DEFAULT nextv
 
 
 --
--- TOC entry 3251 (class 2604 OID 16822)
+-- TOC entry 3255 (class 2604 OID 16822)
 -- Name: usermedications usermedicationid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -466,7 +482,7 @@ ALTER TABLE ONLY public.usermedications ALTER COLUMN usermedicationid SET DEFAUL
 
 
 --
--- TOC entry 3247 (class 2604 OID 16764)
+-- TOC entry 3251 (class 2604 OID 16764)
 -- Name: users userid; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -474,7 +490,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN userid SET DEFAULT nextval('public.us
 
 
 --
--- TOC entry 3440 (class 0 OID 16791)
+-- TOC entry 3445 (class 0 OID 16791)
 -- Dependencies: 220
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -489,7 +505,7 @@ INSERT INTO public.categories VALUES (7, 'Asthma');
 
 
 --
--- TOC entry 3441 (class 0 OID 16805)
+-- TOC entry 3446 (class 0 OID 16805)
 -- Dependencies: 221
 -- Data for Name: medicationcategories; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -522,10 +538,12 @@ INSERT INTO public.medicationcategories VALUES (22, 7, 29);
 INSERT INTO public.medicationcategories VALUES (23, 7, 30);
 INSERT INTO public.medicationcategories VALUES (24, 2, 31);
 INSERT INTO public.medicationcategories VALUES (24, 7, 33);
+INSERT INTO public.medicationcategories VALUES (26, 4, 34);
+INSERT INTO public.medicationcategories VALUES (27, 4, 35);
 
 
 --
--- TOC entry 3438 (class 0 OID 16777)
+-- TOC entry 3443 (class 0 OID 16777)
 -- Dependencies: 218
 -- Data for Name: medications; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -553,36 +571,66 @@ INSERT INTO public.medications VALUES (21, 'Meperidine');
 INSERT INTO public.medications VALUES (22, 'Albuterol');
 INSERT INTO public.medications VALUES (23, 'Budesonide');
 INSERT INTO public.medications VALUES (24, 'Prednizon');
+INSERT INTO public.medications VALUES (26, 'Digoxin');
+INSERT INTO public.medications VALUES (27, 'Betaxolol');
 
 
 --
--- TOC entry 3450 (class 0 OID 16894)
+-- TOC entry 3455 (class 0 OID 16894)
 -- Dependencies: 230
 -- Data for Name: medicationschedule; Type: TABLE DATA; Schema: public; Owner: docker
 --
 
-INSERT INTO public.medicationschedule VALUES (292, 186, 'Monday', '08:00:00', 1, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (293, 187, 'Wednesday', '16:00:00', 2, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (291, 185, 'Saturday', '13:00:00', 2, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (294, 188, 'Sunday', '12:30:00', 2, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (287, 181, 'Sunday', '12:15:00', 2, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (290, 184, 'Thursday', '17:00:00', 2, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (289, 183, 'Wednesday', '14:30:00', 1, '2024-01-21');
-INSERT INTO public.medicationschedule VALUES (288, 182, 'Thursday', '13:00:00', 2, '2024-01-21');
+INSERT INTO public.medicationschedule VALUES (306, 198, 'Tuesday', '15:00:00', 1, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (309, 201, 'Tuesday', '15:30:00', 1, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (310, 202, 'Tuesday', '15:00:00', 1, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (292, 186, 'Monday', '08:00:00', 1, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (293, 187, 'Wednesday', '16:00:00', 2, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (291, 185, 'Saturday', '13:00:00', 2, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (294, 188, 'Sunday', '12:30:00', 2, '2024-01-23');
+INSERT INTO public.medicationschedule VALUES (301, 194, 'Sunday', '16:30:00', 2, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (307, 199, 'Tuesday', '15:30:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (308, 200, 'Tuesday', '15:30:00', 2, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (298, 192, 'Sunday', '16:30:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (314, 206, 'Sunday', '08:00:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (287, 181, 'Sunday', '12:15:00', 2, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (316, 208, 'Wednesday', '10:55:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (296, 190, 'Sunday', '15:00:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (290, 184, 'Thursday', '17:00:00', 2, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (311, 203, 'Monday', '12:00:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (312, 204, 'Sunday', '17:00:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (315, 207, 'Friday', '13:00:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (289, 183, 'Wednesday', '14:30:00', 1, '2024-01-24');
+INSERT INTO public.medicationschedule VALUES (288, 182, 'Thursday', '13:00:00', 2, '2024-01-24');
 
 
 --
--- TOC entry 3452 (class 0 OID 16914)
+-- TOC entry 3457 (class 0 OID 16914)
 -- Dependencies: 232
 -- Data for Name: notifications; Type: TABLE DATA; Schema: public; Owner: docker
 --
 
+INSERT INTO public.notifications VALUES (93, 24, 'It''s 12:30! Take Paracetamol', '12:30:00', true, '2024-01-21', 294);
+INSERT INTO public.notifications VALUES (100, 24, 'It''s 08:00! Take Aspirin', '08:00:00', true, '2024-01-22', 292);
+INSERT INTO public.notifications VALUES (101, 24, 'It''s 14:50! Take Paracetamol', '14:50:00', true, '2024-01-23', NULL);
+INSERT INTO public.notifications VALUES (102, 27, 'It''s 15:00! Take Insulin', '15:00:00', true, '2024-01-23', 306);
+INSERT INTO public.notifications VALUES (105, 10, 'It''s 15:30! Take Naproxen', '15:30:00', false, '2024-01-23', 309);
+INSERT INTO public.notifications VALUES (106, 30, 'It''s 15:00! Take Digoxin', '15:00:00', true, '2024-01-23', 310);
 INSERT INTO public.notifications VALUES (92, 25, 'It''s 12:15! Take Ibum', '12:15:00', true, '2024-01-21', 287);
-INSERT INTO public.notifications VALUES (93, 24, 'It''s 12:30! Take Paracetamol', '12:30:00', false, '2024-01-21', 294);
+INSERT INTO public.notifications VALUES (94, 25, 'It''s 15:00! Take Metformin', '15:00:00', true, '2024-01-21', 296);
+INSERT INTO public.notifications VALUES (95, 25, 'It''s 16:30! Take Ciprofloxacin', '16:30:00', true, '2024-01-21', 298);
+INSERT INTO public.notifications VALUES (96, 25, 'It''s 16:00! Take Warfarin', '16:00:00', true, '2024-01-21', NULL);
+INSERT INTO public.notifications VALUES (97, 25, 'It''s 16:30! Take Aspirin', '16:30:00', true, '2024-01-21', 301);
+INSERT INTO public.notifications VALUES (98, 25, 'It''s 16:00! Take Azithromycin', '16:00:00', true, '2024-01-21', NULL);
+INSERT INTO public.notifications VALUES (99, 25, 'It''s 13:00! Take Oxycodone', '13:00:00', true, '2024-01-21', NULL);
+INSERT INTO public.notifications VALUES (103, 25, 'It''s 15:30! Take Betaxolol', '15:30:00', true, '2024-01-23', 307);
+INSERT INTO public.notifications VALUES (104, 25, 'It''s 15:30! Take Bisoprolol', '15:30:00', true, '2024-01-23', 308);
+INSERT INTO public.notifications VALUES (107, 25, 'It''s 17:00! Take Metoprolol', '17:00:00', true, '2024-01-23', NULL);
+INSERT INTO public.notifications VALUES (108, 25, 'It''s 10:55! Take Metformin', '10:55:00', false, '2024-01-24', 316);
 
 
 --
--- TOC entry 3445 (class 0 OID 16841)
+-- TOC entry 3450 (class 0 OID 16841)
 -- Dependencies: 225
 -- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -592,18 +640,20 @@ INSERT INTO public.roles VALUES (2, 'user');
 
 
 --
--- TOC entry 3448 (class 0 OID 16870)
+-- TOC entry 3453 (class 0 OID 16870)
 -- Dependencies: 228
 -- Data for Name: userdetails; Type: TABLE DATA; Schema: public; Owner: docker
 --
 
 INSERT INTO public.userdetails VALUES (31, 'Jan', 'Adamowicz', 'admin', 'wolf.png', true);
 INSERT INTO public.userdetails VALUES (30, 'Ji', 'Luo', 'darkforest', 'default_photo.png', true);
+INSERT INTO public.userdetails VALUES (33, NULL, NULL, 'example', 'galeria.jpg', true);
+INSERT INTO public.userdetails VALUES (36, NULL, NULL, 'jankowalski@gmail.com', 'P_TGA_EST_XLX-Cab_03.jpg', true);
 INSERT INTO public.userdetails VALUES (15, 'Jan', '', 'user', 'wolf.png', true);
 
 
 --
--- TOC entry 3443 (class 0 OID 16819)
+-- TOC entry 3448 (class 0 OID 16819)
 -- Dependencies: 223
 -- Data for Name: usermedications; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -616,10 +666,23 @@ INSERT INTO public.usermedications VALUES (185, 24, 1, 'pill', '50', 'Paracetamo
 INSERT INTO public.usermedications VALUES (186, 24, 3, 'pill', '100', 'Aspirin');
 INSERT INTO public.usermedications VALUES (187, 24, NULL, 'pill', '500', 'Efferalgan');
 INSERT INTO public.usermedications VALUES (188, 24, 1, 'pill', '100', 'Paracetamol');
+INSERT INTO public.usermedications VALUES (190, 25, 12, 'pill', '300', 'Metformin');
+INSERT INTO public.usermedications VALUES (192, 25, 10, 'pill', '400', 'Ciprofloxacin');
+INSERT INTO public.usermedications VALUES (194, 25, 3, 'pill', '400', 'Aspirin');
+INSERT INTO public.usermedications VALUES (198, 27, 13, 'injection', '1000', 'Insulin');
+INSERT INTO public.usermedications VALUES (199, 25, 27, 'pill', '400', 'Betaxolol');
+INSERT INTO public.usermedications VALUES (200, 25, NULL, 'pill', '400', 'Bisoprolol');
+INSERT INTO public.usermedications VALUES (201, 10, 4, 'pill', '100', 'Naproxen');
+INSERT INTO public.usermedications VALUES (202, 30, 26, 'pill', '400', 'Digoxin');
+INSERT INTO public.usermedications VALUES (203, 25, 1, 'pill', '100', 'Paracetamol');
+INSERT INTO public.usermedications VALUES (204, 25, 1, 'pill', '200', 'Paracetamol');
+INSERT INTO public.usermedications VALUES (206, 25, 10, 'pill', '500', 'Ciprofloxacin');
+INSERT INTO public.usermedications VALUES (207, 25, 24, 'pill', '100', 'Prednizon');
+INSERT INTO public.usermedications VALUES (208, 25, 12, 'pill', '400', 'Metformin');
 
 
 --
--- TOC entry 3436 (class 0 OID 16761)
+-- TOC entry 3441 (class 0 OID 16761)
 -- Dependencies: 216
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -627,10 +690,12 @@ INSERT INTO public.usermedications VALUES (188, 24, 1, 'pill', '100', 'Paracetam
 INSERT INTO public.users VALUES (10, 'test@test.com', 15, '$2y$10$mnuoZG43i5hwfyOACeHAFucB.dpQzYz76yP8Xv4lwK7B02VrgpMBG', 1);
 INSERT INTO public.users VALUES (24, 'user@user.com', 30, '$2y$10$ld7Kk4HiDZJnKMCYiL8g9.4neLANUXhxivyn6wBwvJv.uGKeUVIbC', 2);
 INSERT INTO public.users VALUES (25, 'adm.medminder@gmail.com', 31, '$2y$10$7lz6Vh82vVKJtyXC8L5fVO92hXQNZXUr.IA72kdlIbHU9lMQcw1YG', 1);
+INSERT INTO public.users VALUES (27, 'example@email.com', 33, '$2y$10$RuB3/9frYjI9D2BYYrs6YO1kuZKkTMXa.MmwqHHdPdA9MEt56FQcy', 2);
+INSERT INTO public.users VALUES (30, 'jankowalski@gmail.com', 36, '$2y$10$ZDldnyHPQa3AanJh4.e01uG70CGOKz5xxs5H9aFRvktL4Ly0FGoOm', 2);
 
 
 --
--- TOC entry 3467 (class 0 OID 0)
+-- TOC entry 3472 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: categories_categoryid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
@@ -639,43 +704,43 @@ SELECT pg_catalog.setval('public.categories_categoryid_seq', 7, true);
 
 
 --
--- TOC entry 3468 (class 0 OID 0)
+-- TOC entry 3473 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: medicationcategories_medicationcategoriesid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.medicationcategories_medicationcategoriesid_seq', 33, true);
+SELECT pg_catalog.setval('public.medicationcategories_medicationcategoriesid_seq', 35, true);
 
 
 --
--- TOC entry 3469 (class 0 OID 0)
+-- TOC entry 3474 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: medications_medicationid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.medications_medicationid_seq', 25, true);
+SELECT pg_catalog.setval('public.medications_medicationid_seq', 27, true);
 
 
 --
--- TOC entry 3470 (class 0 OID 0)
+-- TOC entry 3475 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: medicationschedule_scheduleid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.medicationschedule_scheduleid_seq', 294, true);
+SELECT pg_catalog.setval('public.medicationschedule_scheduleid_seq', 316, true);
 
 
 --
--- TOC entry 3471 (class 0 OID 0)
+-- TOC entry 3476 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: notifications_notificationid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.notifications_notificationid_seq', 93, true);
+SELECT pg_catalog.setval('public.notifications_notificationid_seq', 108, true);
 
 
 --
--- TOC entry 3472 (class 0 OID 0)
+-- TOC entry 3477 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: roles_roleid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
@@ -684,34 +749,34 @@ SELECT pg_catalog.setval('public.roles_roleid_seq', 2, true);
 
 
 --
--- TOC entry 3473 (class 0 OID 0)
+-- TOC entry 3478 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: userdetails_userdetailsid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.userdetails_userdetailsid_seq', 32, true);
+SELECT pg_catalog.setval('public.userdetails_userdetailsid_seq', 36, true);
 
 
 --
--- TOC entry 3474 (class 0 OID 0)
+-- TOC entry 3479 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: usermedications_usermedicationid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.usermedications_usermedicationid_seq', 188, true);
+SELECT pg_catalog.setval('public.usermedications_usermedicationid_seq', 208, true);
 
 
 --
--- TOC entry 3475 (class 0 OID 0)
+-- TOC entry 3480 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: users_userid_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.users_userid_seq', 26, true);
+SELECT pg_catalog.setval('public.users_userid_seq', 30, true);
 
 
 --
--- TOC entry 3266 (class 2606 OID 16796)
+-- TOC entry 3270 (class 2606 OID 16796)
 -- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -720,7 +785,7 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- TOC entry 3268 (class 2606 OID 16855)
+-- TOC entry 3272 (class 2606 OID 16855)
 -- Name: medicationcategories medicationcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -729,7 +794,7 @@ ALTER TABLE ONLY public.medicationcategories
 
 
 --
--- TOC entry 3264 (class 2606 OID 16782)
+-- TOC entry 3268 (class 2606 OID 16782)
 -- Name: medications medications_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -738,7 +803,7 @@ ALTER TABLE ONLY public.medications
 
 
 --
--- TOC entry 3278 (class 2606 OID 16899)
+-- TOC entry 3282 (class 2606 OID 16899)
 -- Name: medicationschedule medicationschedule_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -747,7 +812,7 @@ ALTER TABLE ONLY public.medicationschedule
 
 
 --
--- TOC entry 3281 (class 2606 OID 16921)
+-- TOC entry 3285 (class 2606 OID 16921)
 -- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -756,7 +821,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- TOC entry 3272 (class 2606 OID 16846)
+-- TOC entry 3276 (class 2606 OID 16846)
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -765,7 +830,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 3274 (class 2606 OID 16877)
+-- TOC entry 3278 (class 2606 OID 16877)
 -- Name: userdetails userdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -774,7 +839,7 @@ ALTER TABLE ONLY public.userdetails
 
 
 --
--- TOC entry 3276 (class 2606 OID 16885)
+-- TOC entry 3280 (class 2606 OID 16885)
 -- Name: userdetails userdetails_username_key; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -783,7 +848,7 @@ ALTER TABLE ONLY public.userdetails
 
 
 --
--- TOC entry 3270 (class 2606 OID 16829)
+-- TOC entry 3274 (class 2606 OID 16829)
 -- Name: usermedications usermedications_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -792,7 +857,7 @@ ALTER TABLE ONLY public.usermedications
 
 
 --
--- TOC entry 3260 (class 2606 OID 16766)
+-- TOC entry 3264 (class 2606 OID 16766)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -801,7 +866,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3262 (class 2606 OID 16768)
+-- TOC entry 3266 (class 2606 OID 16768)
 -- Name: users users_userdetailsid_key; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -810,7 +875,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3279 (class 1259 OID 16911)
+-- TOC entry 3283 (class 1259 OID 16911)
 -- Name: schedule_unique; Type: INDEX; Schema: public; Owner: docker
 --
 
@@ -818,7 +883,7 @@ CREATE UNIQUE INDEX schedule_unique ON public.medicationschedule USING btree (us
 
 
 --
--- TOC entry 3282 (class 2606 OID 16879)
+-- TOC entry 3286 (class 2606 OID 16879)
 -- Name: users fk_userdetails; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -827,7 +892,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3283 (class 2606 OID 16847)
+-- TOC entry 3287 (class 2606 OID 16847)
 -- Name: users fk_users_roles; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -836,7 +901,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3284 (class 2606 OID 16813)
+-- TOC entry 3288 (class 2606 OID 16813)
 -- Name: medicationcategories medicationcategories_categoryid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -845,7 +910,7 @@ ALTER TABLE ONLY public.medicationcategories
 
 
 --
--- TOC entry 3285 (class 2606 OID 16808)
+-- TOC entry 3289 (class 2606 OID 16808)
 -- Name: medicationcategories medicationcategories_medicationid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -854,7 +919,7 @@ ALTER TABLE ONLY public.medicationcategories
 
 
 --
--- TOC entry 3289 (class 2606 OID 16940)
+-- TOC entry 3293 (class 2606 OID 16940)
 -- Name: notifications medicationscheduleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -863,7 +928,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- TOC entry 3290 (class 2606 OID 16922)
+-- TOC entry 3294 (class 2606 OID 16922)
 -- Name: notifications notifications_userid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -872,7 +937,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- TOC entry 3288 (class 2606 OID 16905)
+-- TOC entry 3292 (class 2606 OID 16905)
 -- Name: medicationschedule usermedications_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -881,7 +946,7 @@ ALTER TABLE ONLY public.medicationschedule
 
 
 --
--- TOC entry 3286 (class 2606 OID 16835)
+-- TOC entry 3290 (class 2606 OID 16835)
 -- Name: usermedications usermedications_medicationid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -890,7 +955,7 @@ ALTER TABLE ONLY public.usermedications
 
 
 --
--- TOC entry 3287 (class 2606 OID 16830)
+-- TOC entry 3291 (class 2606 OID 16830)
 -- Name: usermedications usermedications_userid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -898,7 +963,7 @@ ALTER TABLE ONLY public.usermedications
     ADD CONSTRAINT usermedications_userid_fkey FOREIGN KEY (userid) REFERENCES public.users(userid);
 
 
--- Completed on 2024-01-21 12:28:39 UTC
+-- Completed on 2024-01-24 10:12:00 UTC
 
 --
 -- PostgreSQL database dump complete
