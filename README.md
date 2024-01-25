@@ -19,8 +19,8 @@ MedMinder is an application that will ensure you never forget to take your medic
 <img src="public/assets/homePage-web.png">
 <img src="public/assets/notifications-web.png">
 <img src="public/assets/account-web.png">
-<img src="public/assets/yourmedications-web.png">
 <img src="public/assets/settings-web.png">
+<img src="public/assets/yourmedications-web.png">
 <img src="public/assets/addmed-web.png">
 <img src="public/assets/addcustommed-web.png">
 <img src="public/assets/schedule-web.png">
@@ -32,8 +32,8 @@ MedMinder is an application that will ensure you never forget to take your medic
 <img src="public/assets/calendar-mob.png">
 <img src="public/assets/notifications-mob.png">
 <img src="public/assets/account-mob.png">
-<img src="public/assets/your-medications-mob.png">
 <img src="public/assets/settings-mob.png">
+<img src="public/assets/your-medications-mob.png">
 <img src="public/assets/addMed-mob.png">
 <img src="public/assets/addCustomMed-mob.png">
 <img src="public/assets/dosageSchedule-mob.png">
@@ -90,5 +90,3 @@ MedMinder is released under the [MIT](https://choosealicense.com/licenses/mit/) 
 If you encounter any issues or have questions, please file an issue on the [GitHub issue tracker](https://github.com/JanAdamowicz1/MedMinder/issues).
 
 For further assistance or feedback, reach out to us at `adm.medminder@gmail.com`.
-
-

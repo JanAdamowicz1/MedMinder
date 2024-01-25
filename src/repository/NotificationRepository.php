@@ -101,7 +101,7 @@ class NotificationRepository extends Repository
         ]);
     }
 
-    public function getUserNotificationSetting()
+    public function getUserNotificationSetting(): bool
     {
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
@@ -123,7 +123,7 @@ class NotificationRepository extends Repository
         return false;
     }
 
-    public function updateNotifications(bool $enable)
+    public function updateNotifications(bool $enable): void
     {
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;

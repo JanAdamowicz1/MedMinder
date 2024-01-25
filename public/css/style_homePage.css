@@ -1,24 +1,24 @@
-.displayer{
+.displayer {
     flex-direction: row;
     align-items: stretch;
     justify-content: flex-start;
 }
 
-.home_page_container .content{
+.content {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     height: 100vh;
 }
 
-.home_page_container .content .content_left{
+.content .content_left {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     height: 100vh;
 }
 
-.navbar{
+.navbar {
     display: none;
 }
 
@@ -26,7 +26,7 @@
     display: none;
 }
 
-.header{
+.header {
     position: sticky;
     top: 0;
     display: flex;
@@ -40,7 +40,7 @@
     margin-top: 1vh;
 }
 
-.user_photo img{
+.user_photo img {
     height: 7vh;
     width: 7vh;
     border-radius: 50%;
@@ -49,7 +49,7 @@
 
 .user_text {
     margin-left: 3vw; 
-    height: 7vh;
+    height: 10vh;
     font-size: 4vh; 
     display: flex;
     flex-direction: column;
@@ -57,25 +57,33 @@
 }
 
 .user_text p:last-child {
-    font-size: 3vh; 
+    font-size: 3vh;
+}
+
+.user_text p:nth-child(2) {
+    max-height: 100vh;
+    max-width: 55vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .user_text p {
     margin: 0; 
-    flex: 1; 
+    flex: 1;
 }
 
 .menu_icon {
     margin-left: auto; 
 }
 
-.menu_icon button{
+.menu_icon button {
     height: 7vh;
     width: 7vh;
     margin: 3vw;
 }
 
-.header .notifications{
+.header .notifications {
     display: none;
 }
 
@@ -123,40 +131,40 @@
 }
 
 
-.home_page_container .content .buttons_container{
+.content .buttons_container {
     display: flex;
     justify-content: center;
 }
 
-.home_page_container .content>.buttons_container .button{
+.content>.buttons_container .button {
     height: 7vw;
     width: 35vw;
     font-size: 6vw;
 }
 
-.home_page_container .content_left>.buttons_container .button{
+.content_left>.buttons_container .button {
     height: 7vw;
     width: 35vw;
     font-size: 6vw;
 }
 
-.home_page_container .displayer p:first-child{
+.displayer p:first-child {
     font-size: 6vw; 
 }
 
-.home_page_container .displayer p:last-child{
+.displayer p:last-child {
     font-size: 4vw; 
 }
 
-.home_page_container .date .displayer p:first-child{
+.date .displayer p:first-child {
     font-size: 7vw; 
 }
 
-.home_page_container .date .displayer p:last-child{
+.date .displayer p:last-child {
     font-size: 5vw; 
 }
 
-.home_page_container .date .displayer {
+.date .displayer {
     padding: 3% 2%;
     height: 6vh;
     display: flex;
@@ -164,7 +172,7 @@
     align-items: center;
 }
 
-.home_page_container h4{
+h4 {
     margin-left: 2vw;
 }
 
@@ -192,7 +200,7 @@
     margin-bottom: 2vh;
 }
 
-#notifications_list .displayer  p{
+#notifications_list .displayer  p {
     max-width: 70vw;
     overflow: hidden;
     font-size: 2vh;
@@ -202,13 +210,12 @@
     color: rgb(128, 128, 128);
 }
 
-
 .state-false {
     color: var(--primary);
     font-weight: bold;
 }
 
-.med_list{
+.med_list {
     display: flex;
     flex-direction: column;
     margin-bottom: 1vh;
@@ -216,7 +223,7 @@
     flex: 1;
 }
 
-.med_list .displayer{
+.med_list .displayer {
     display: flex;
     justify-content: space-between; 
     align-items: center;
@@ -242,7 +249,7 @@
     display: none;
 }
 
-.bottom_bar{
+.bottom_bar {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -255,7 +262,7 @@
     align-items: center;
 }
 
-.home_page_container .bottom_buttons_container {
+.bottom_buttons_container {
     display: flex; 
     flex-direction: row;
     justify-content: space-between; 
@@ -264,7 +271,7 @@
     z-index: 1; 
 }
 
-.home_page_container .bottom_buttons_container .button {
+.bottom_buttons_container .button {
     height: 7vw;
     width: 35vw;
     font-size: 6vw;
@@ -278,12 +285,12 @@
     justify-content: center; 
 }
 
-.bottom_bar i{
+.bottom_bar i {
     font-size: 6vh; 
     color: var(--primary);
 }
 
-.bottom_bar p{
+.bottom_bar p {
     font-size: 2vh;
 }
 
@@ -350,7 +357,7 @@
     display: none;
 }
 
-.sidepanel .calendar-title {
+.calendar-title {
     font-size: 3vh;
 }
 
@@ -362,7 +369,7 @@
 .modal {
     display: none;
     position: fixed;
-    z-index: 10;
+    z-index: 4;
     left: 0;
     top: 0;
     width: 100%;
@@ -415,19 +422,21 @@
 
     .modal-content ul li {
         font-size: 3vh;
-        padding-bottom: 1vh
     }
 
     #notifications button {
         width: 20vw;
-        height: 5vh;
     }
 
     #notifications_list {
         width: 30vw;
     }
 
-    .header .notifications{
+    .fa-bell:hover {
+        cursor: pointer;
+    }
+
+    .header .notifications {
         display: block;
         margin-right: 4vw;
         margin-left: auto;
@@ -443,46 +452,19 @@
         display: block;
     }
 
-    .calendar {
-        width: 20vw;
-        margin: 3vh;
-        padding: 2vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
     .calendar-controls {
         margin-top: 7vh;
     }
 
-    .calendar table {
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: collapse;
-    }
-
     .calendar th, .calendar td {
-        height: 3vh;
-        width: 3vh;
-        color: var(--primary);
         font-size: 2vh;
     }
 
-
     .calendar-controls button {
-        margin: 0 1vw;
-        padding: 0;
-        height: 5vh;
         width: 3vw;
-        font-size: 3vh;
     }
 
-    .calendar-title {
-        font-size: 3vh;
-    }
-
-    .main_content{
+    .main_content {
         display: flex;
         flex-direction: row;
     }
@@ -496,7 +478,7 @@
         flex-direction: row;
     }
 
-    .home_page_container .content .content_left{
+    .content .content_left {
         width: 50vw;
     }
 
@@ -534,7 +516,7 @@
         color: var(--secondary);
     }
     
-    .navbar h1{
+    .navbar h1 {
         margin-top: 5vh;
         margin-bottom: 0;
         text-align: center;
@@ -545,7 +527,7 @@
         color: var(--secondary);
     }
 
-    .navbar .buttons_container{
+    .navbar .buttons_container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -554,23 +536,23 @@
         height: 100%;
     }
 
-    .home_page_container .navbar .buttons_container button {
+    .navbar .buttons_container button {
         width: 15vw;
         height: 6vh;
         text-align: left;
-        z-index: 9999;
+        z-index: 3;
         font-size: 3vh;
         margin: 0 0 2vh;
         gap: 0.5vw;
         color: rgb(21, 10, 98);
     }
 
-    .home_page_container .navbar .buttons_container button:last-child {
-        margin-top: auto; 
+    .navbar .buttons_container button:last-child {
+        margin-top: auto;
         margin-bottom: 2vh;
     }
 
-    .home_page_container .navbar .buttons_container a {
+    .navbar .buttons_container a {
         color: rgb(21, 10, 98);
     }
 
@@ -603,43 +585,37 @@
 
     .content {
         flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
         width: 83vw;
     }
 
-    .home_page_container .displayer p:first-child{
+    .displayer p:first-child {
         font-size: 3vh; 
     }
     
-    .home_page_container .displayer p:last-child{
+    .displayer p:last-child {
         font-size: 2vh; 
     }
     
-    .home_page_container .date .displayer p:first-child{
+    .date .displayer p:first-child {
         font-size: 7vh; 
     }
     
-    .home_page_container .date .displayer p:last-child{
+    .date .displayer p:last-child {
         font-size: 4vh; 
     }
 
-    .home_page_container h4{
+    h4 {
         margin-top: 1vh;
         margin-bottom: 1vh;
         font-size: 3vh;
     }
     
-    .home_page_container .date .displayer {
+    .date .displayer {
         padding: 3% 2%;
         height: 6vh;
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
     }
 
-    .med_list .displayer{
+    .med_list .displayer {
         margin: 1vh;
     }
 
@@ -647,17 +623,14 @@
         max-width: 40vw;
     }
 
-    .home_page_container .bottom_buttons_container {
-        display: flex; 
-        flex-direction: row;
+    .bottom_buttons_container {
         justify-content: center;
-        align-items: center;
         margin-bottom: 10vh;
         gap: 0.5vw;
         z-index: 2; 
     }
     
-    .home_page_container .bottom_buttons_container .button {
+    .bottom_buttons_container .button {
         height: 5vh;
         width: 20vw;
         font-size: 3vh;
@@ -678,13 +651,12 @@
     }
 
     .user_info {
-        margin-top: auto; /* Wyśrodkowanie w pionie */
+        margin-top: auto;
         margin-bottom: auto;
     }
 
-    .user_text{
-        height: 10vh;
+    .user_text {
+        margin-left: 1vw;
     }
-
 }
 

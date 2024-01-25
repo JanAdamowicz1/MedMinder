@@ -10,7 +10,7 @@
 <div class="common-container">
     <div class="displayer">
         <a href="homePage">
-            <i class="fa-solid fa-xmark"></i></i>
+            <i class="fa-solid fa-xmark"></i>
         </a>
         <h1>Settings</h1>
         <h2>Notifications</h2>

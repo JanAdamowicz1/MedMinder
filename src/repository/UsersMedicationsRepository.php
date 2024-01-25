@@ -168,7 +168,7 @@ class UsersMedicationsRepository extends Repository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    private function getMedicationIdByName(string $medicationName)
+    private function getMedicationIdByName(string $medicationName): ?int
     {
         $stmt = $this->database->connect()->prepare('
         SELECT medicationid FROM medications WHERE medicationname = :medicationname

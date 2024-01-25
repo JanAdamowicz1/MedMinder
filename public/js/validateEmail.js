@@ -10,6 +10,7 @@ function markValidation(element, condition) {
 }
 
 function validateEmail() {
+    // Ustawia opóźnienie 1 sekundę przed wykonaniem walidacji
     setTimeout(function () {
             markValidation(emailInput, isEmail(emailInput.value));
         },

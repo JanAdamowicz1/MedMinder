@@ -63,6 +63,7 @@ body{
 
 .button:hover{
     background: var(--secondary);
+    cursor: pointer;
 }
 
 .common-container {

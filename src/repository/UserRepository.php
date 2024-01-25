@@ -48,29 +48,39 @@ class UserRepository extends Repository
         return (int) $result['userid'];
     }
 
-    public function addUser(User $user)
+    public function addUser(User $user): void
     {
-        $stmt = $this->database->connect()->prepare('
+        $pdo = $this->database->connect();
+        $pdo->beginTransaction();
+
+        try {
+            $stmt = $pdo->prepare('
             INSERT INTO userdetails (username, notifications)
             VALUES (?, ?)
         ');
+            $stmt->execute([
+                $user->getUsername(),
+                'true'
+            ]);
 
-        $stmt->execute([
-            $user->getUsername(),
-            'true'
-        ]);
+            $userDetailsId = $pdo->lastInsertId();
 
-        $stmt = $this->database->connect()->prepare('
+            $stmt = $pdo->prepare('
             INSERT INTO users (email, password, userdetailsid, roleid)
             VALUES (?, ?, ?, ?)
         ');
+            $stmt->execute([
+                $user->getEmail(),
+                $user->getPassword(),
+                $userDetailsId,
+                $this->getRoleId($user->getRole())
+            ]);
 
-        $stmt->execute([
-            $user->getEmail(),
-            $user->getPassword(),
-            $this->getUserDetailsId($user),
-            $this->getRoleId($user->getRole())
-        ]);
+            $pdo->commit();
+        } catch (Exception $e) {
+            $pdo->rollback();
+            throw $e;
+        }
     }
 
     public function getUserDetailsId(User $user): int
@@ -108,7 +118,7 @@ class UserRepository extends Repository
         return $result ? (int)$result['roleid'] : 0;
     }
 
-    public function updateUserImage(User $user)
+    public function updateUserImage(User $user): void
     {
         $userdetailsid = $this->getUserDetailsId($user);
         $stmt = $this->database->connect()->prepare('
@@ -123,7 +133,7 @@ class UserRepository extends Repository
         ]);
     }
 
-    public function updateUsername(User $user, string $newUsername)
+    public function updateUsername(User $user, string $newUsername): void
     {
         $userdetailsid = $this->getUserDetailsId($user);
         $user->setUsername($newUsername);
@@ -140,7 +150,7 @@ class UserRepository extends Repository
         ]);
     }
 
-    public function updateName(User $user)
+    public function updateName(User $user): void
     {
         $userdetailsid = $this->getUserDetailsId($user);
 

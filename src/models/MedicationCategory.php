@@ -2,25 +2,13 @@
 
 class MedicationCategory
 {
-    private $medicationcategoriesid;
     private $medicationid;
     private $categoryid;
 
-    public function __construct(int $medicationcategoriesid, int $medicationid, int $categoryid)
+    public function __construct(int $medicationid, int $categoryid)
     {
-        $this->medicationcategoriesid = $medicationcategoriesid;
         $this->medicationid = $medicationid;
         $this->categoryid = $categoryid;
-    }
-
-    public function getMedicationcategoriesid()
-    {
-        return $this->medicationcategoriesid;
-    }
-
-    public function setMedicationcategoriesid($medicationcategoriesid): void
-    {
-        $this->medicationcategoriesid = $medicationcategoriesid;
     }
 
     public function getMedicationid()

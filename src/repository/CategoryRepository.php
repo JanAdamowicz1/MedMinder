@@ -3,7 +3,8 @@
 require_once 'Repository.php';
 require_once __DIR__ . '/../models/Category.php';
 class CategoryRepository extends Repository {
-    public function getCategories() {
+    public function getCategories(): array
+    {
         $stmt = $this->database->connect()->prepare('
             SELECT categoryid, categoryname FROM public.categories
         ');

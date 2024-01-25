@@ -12,7 +12,7 @@
 <div class="common-container">
     <div class="displayer">
         <a href="homePage">
-            <i class="fa-solid fa-xmark"></i></i>
+            <i class="fa-solid fa-xmark"></i>
         </a>
         <h1>What medication would you like to add?</h1>
         <form action="addMed" method="POST">

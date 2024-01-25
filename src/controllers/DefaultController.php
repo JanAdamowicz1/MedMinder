@@ -9,13 +9,11 @@ require_once __DIR__.'/../repository/CategoryRepository.php';
 class DefaultController extends AppController {
     private $usersMedicationsRepository;
     private $notificationRepository;
-    private $notificationController;
     private $categoryRepository;
     public function __construct()
     {
         parent::__construct();
         $this->usersMedicationsRepository = new UsersMedicationsRepository();
-        $this->notificationController = new NotificationController();
         $this->notificationRepository = new NotificationRepository();
         $this->categoryRepository = new CategoryRepository();
     }
@@ -38,8 +36,9 @@ class DefaultController extends AppController {
 
     public function homePage()
     {
+        $notificationController = new NotificationController();
         $this->checkSession();
-        $this->notificationController->generateNotifications();
+        $notificationController->generateNotifications();
         $this->notificationRepository->deleteOldNotificationsForUser();
         $usersMedications = $this->usersMedicationsRepository->getUsersMedications();
         $notifications = $this->notificationRepository->getUsersNotifications();

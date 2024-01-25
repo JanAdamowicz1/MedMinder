@@ -3,7 +3,8 @@
 require_once 'Repository.php';
 require_once __DIR__ . '/../models/Medication.php';
 class MedicationRepository extends Repository {
-    public function getMedications() {
+    public function getMedications(): array
+    {
         $stmt = $this->database->connect()->prepare('
             SELECT medicationid, medicationname FROM medications
         ');
@@ -43,7 +44,8 @@ class MedicationRepository extends Repository {
             return $medicationId;
         }
     }
-    public function checkMedicationInCategory(int $categoryId, string $medicationName) {
+    public function checkMedicationInCategory(int $categoryId, string $medicationName)
+    {
         //zapytanie do widoku CategoriesAndMedications
         $stmt = $this->database->connect()->prepare('
         SELECT categoryname, medicationname

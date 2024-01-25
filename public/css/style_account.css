@@ -12,8 +12,8 @@
 
 i {
     position: absolute;
-    top: 2vh;
-    left: 2vh;
+    top: 3vh;
+    left: 3vh;
     font-size: 3vh;
     color: var(--primary);
 }

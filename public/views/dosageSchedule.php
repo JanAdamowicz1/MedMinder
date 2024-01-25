@@ -10,9 +10,6 @@
 <body>
 <div class="common-container">
     <div class="displayer">
-        <a href="homePage">
-            <i class="fa-solid fa-xmark"></i></i>
-        </a>
         <h1>Set dosage schedule</h1>
         <form action="dosageSchedule" method="POST">
             <input type="hidden" name="medicationId" value="<?= htmlspecialchars($userMedication->getId()) ?>">

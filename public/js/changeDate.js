@@ -1,15 +1,17 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     let currentDate = new Date();
-    const originalDate = new Date(); // Zachowaj oryginalną datę (dzisiejszą) do porównań
+    // Zachowaj oryginalną datę (dzisiejszą) do porównań
+    const originalDate = new Date();
 
     const displayDateElement = document.getElementById('displayDate');
     const todayText = document.getElementById('todayText');
     const yesterdayButton = document.getElementById('yesterday');
     const tomorrowButton = document.getElementById('tomorrow');
-    const todayButton = document.getElementById('todayButton'); // Nowy przycisk
+    const todayButton = document.getElementById('todayButton');
     const usersMedicationContainer = document.querySelector(".med_list");
 
 
+    // Funkcja do pobierania leków użytkownika dla wybranego dnia
     function fetchMedicationsForSelectedDay() {
         const displayDateElement = document.querySelector('#displayDate');
         const fullDateText = displayDateElement.textContent;
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const data = {dayOfWeek: dayOfWeek};
         console.log("Wybrany dzień tygodnia:", data);
 
+        // Wywołanie API do pobrania leków
         fetch("/showUsersMedicationsToCurrentDay", {
             method: "POST",
             headers: {
@@ -34,6 +37,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+    // Funkcja do ładowania leków użytkownika na stronę
     function loadUserMedications(userMedications) {
         console.log("Otrzymane leki:", userMedications);
         userMedications.forEach(userMedication => {
@@ -42,6 +46,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+    // Funkcja do tworzenia pojedynczego elementu leku
     function createUserMedication(userMedication) {
         const template = document.querySelector("#usermedications_template");
 
@@ -104,7 +109,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     document.addEventListener('dateSelected', (event) => {
-        currentDate = event.detail;
+        let newDate = event.detail;
+        currentDate.setFullYear(newDate.getFullYear(), newDate.getMonth(), newDate.getDate());
         updateDisplayDate();
         fetchMedicationsForSelectedDay();
     });

@@ -4,7 +4,7 @@ require_once 'Repository.php';
 require_once __DIR__.'/../models/MedicationSchedule.php';
 class MedicationScheduleRepository extends Repository
 {
-    public function addDosageSchedule(MedicationSchedule $medicationSchedule)
+    public function addDosageSchedule(MedicationSchedule $medicationSchedule): void
     {
         try
         {
@@ -27,7 +27,7 @@ class MedicationScheduleRepository extends Repository
         }
     }
 
-    public function updateUploadDate(int $medicationScheduleId, string $newUploadDate)
+    public function updateUploadDate(int $medicationScheduleId, string $newUploadDate): void
     {
         $stmt = $this->database->connect()->prepare('
         UPDATE medicationschedule SET uploaddate = ? WHERE scheduleid = ?

@@ -3,14 +3,6 @@
     width: 90vw;
 }
 
-i {
-    position: absolute;
-    top: 2vh;
-    left: 2vh;
-    font-size: 3vh;
-    color: var(--primary);
-}
-
 h1 {
     position: absolute;
     top: 5vh;
