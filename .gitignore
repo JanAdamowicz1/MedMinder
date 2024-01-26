@@ -2,4 +2,3 @@ config.php
 .env
 docker/db/Dockerfile
 public/uploads
-.idea

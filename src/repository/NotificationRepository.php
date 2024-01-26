@@ -46,10 +46,6 @@ class NotificationRepository extends Repository
         $userRepository = new UserRepository();
         $email = $_SESSION['user'] ?? null;
 
-        if (!$email) {
-            throw new Exception("User is not logged in.");
-        }
-
         $userid = $userRepository->getIdByEmail($email);
         if ($userid === null) {
             throw new Exception("User not found.");
